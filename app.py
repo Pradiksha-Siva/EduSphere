@@ -1,3 +1,4 @@
+from flask import Flask, render_template
 from flask import Flask
 from config import Config
 from extensions import db
@@ -23,7 +24,10 @@ db.init_app(app)
 
 
 @app.route("/")
-def home():
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+'''def home():
     departments = Department.query.all()
 
     output = ""
@@ -34,5 +38,7 @@ def home():
     return output
 
 
+if __name__ == "__main__":
+    app.run(debug=True)'''
 if __name__ == "__main__":
     app.run(debug=True)

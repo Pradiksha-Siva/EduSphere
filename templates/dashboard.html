@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduSphere — Department Portal</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<aside id="sidebar">
+  <div class="brand">EduSphere</div>
+
+  <div class="switcher-group">
+    <label for="deptSelect">Department</label>
+    <select id="deptSelect" onchange="onDeptChange()">
+      <option value="AI & DS">AI & DS</option>
+      <option value="CSE">CSE</option>
+      <option value="IT">IT</option>
+      <option value="ECE">ECE</option>
+      <option value="EEE">EEE</option>
+      <option value="MECH">MECH</option>
+      <option value="CIVIL">CIVIL</option>
+      <option value="MBA">MBA</option>
+    </select>
+  </div>
+
+  <div class="switcher-group">
+    <label for="roleSelect">Role</label>
+    <select id="roleSelect" onchange="onRoleChange()">
+      <option value="student">Student</option>
+      <option value="representative">Class Representative</option>
+      <option value="faculty">Faculty</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
+
+  <ul class="nav-list" id="navList"></ul>
+</aside>
+
+<main id="main-content">
+  <header>
+    <div>
+      <h2 id="page-title">Dashboard</h2>
+      <div class="dept-pill" id="deptPill">AI & DS</div>
+    </div>
+    <div class="user-profile">
+      <div>
+        <div id="userName" style="font-weight:600; font-size:13px; text-align:right;">Student User</div>
+        <div class="user-role" id="userRole">Student</div>
+      </div>
+      <div class="avatar" id="userAvatar">S</div>
+    </div>
+  </header>
+  <div class="content-area" id="viewContainer"></div>
+</main>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
