@@ -25,8 +25,14 @@ db.init_app(app)
 
 @app.route("/")
 @app.route("/dashboard")
+@app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    departments = Department.query.all()
+
+    return render_template(
+        "dashboard.html",
+        departments=departments
+    )
 '''def home():
     departments = Department.query.all()
 
