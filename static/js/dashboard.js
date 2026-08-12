@@ -43,7 +43,7 @@ const roleConfig = {
   }
 };
 
-let currentRole = 'student';
+const currentRole = window.USER_ROLE || 'student';
 let currentDept = 'AI & DS';
 
 function onDeptChange() {
@@ -52,22 +52,7 @@ function onDeptChange() {
   renderCurrentView();
 }
 
-function onRoleChange() {
-  currentRole = document.getElementById('roleSelect').value;
-  const cfg = roleConfig[currentRole];
-  document.getElementById('userName').innerText = cfg.label + " User";
-  document.getElementById('userRole').innerText = cfg.label;
-  document.getElementById('userAvatar').innerText = cfg.avatar;
 
-  const navList = document.getElementById('navList');
-  navList.innerHTML = '';
-  cfg.menu.forEach((item, i) => {
-    const li = document.createElement('li');
-    li.innerHTML = `<a class="nav-link ${i === 0 ? 'active' : ''}" data-view="${item.id}" onclick="loadView('${item.id}','${item.label}', this)">${item.label}</a>`;
-    navList.appendChild(li);
-  });
-  loadView(cfg.menu[0].id, cfg.menu[0].label);
-}
 
 let currentViewId = null, currentViewTitle = null;
 function loadView(viewId, title, el) {
@@ -134,6 +119,7 @@ function renderTemplate(viewId, dept) {
       </div>
     </div>
   `;
+
   case 'fac-assignments':
   return `
     <div class="form-row">
@@ -191,7 +177,7 @@ function renderTemplate(viewId, dept) {
       </tr>
     </table>
   `;
-  
+
   case 'fac-attendance':
   return `
     <div class="form-row">
@@ -241,7 +227,7 @@ function renderTemplate(viewId, dept) {
     </table>
   `;
 
-    case 'fac-marks':
+  case 'fac-marks':
   return `
     <div class="form-row">
       <div class="field">
@@ -290,7 +276,8 @@ function renderTemplate(viewId, dept) {
       </tr>
     </table>
   `;
-  
+
+
     case 'std-leave':
   return `
     <div class="section-title">
@@ -672,5 +659,37 @@ case 'std-voice':
       return `<div class="empty-state">Nothing here yet.</div>`;
   }
 }
+// Get the current user's role
+const role = roleConfig[currentRole] || roleConfig.student;
 
-onRoleChange();
+// Update user information
+document.getElementById("userRole").innerText = role.label;
+document.getElementById("userAvatar").innerText = role.avatar;
+
+// Build navigation according to the logged-in role
+const navList = document.getElementById("navList");
+
+navList.innerHTML = role.menu.map(item => `
+  <li>
+    <a href="#" class="nav-link" onclick="loadView('${item.id}', '${item.label}', this); return false;">
+      ${item.label}
+    </a>
+  </li>
+`).join("");
+
+// Open the first page automatically
+if (role.menu.length > 0) {
+  const firstItem = role.menu[0];
+
+  currentViewId = firstItem.id;
+  currentViewTitle = firstItem.label;
+
+  document.getElementById("page-title").innerText = firstItem.label;
+
+  const firstLink = navList.querySelector(".nav-link");
+  if (firstLink) {
+    firstLink.classList.add("active");
+  }
+
+  renderCurrentView();
+}
