@@ -61,3 +61,8 @@ class Subject(db.Model):
     "Assignment",
     back_populates="subject"
     )
+
+    notes = db.relationship(
+    "Notes",
+    back_populates="subject"
+    )

@@ -84,3 +84,18 @@ class Student(db.Model):
     "Attendance",
     back_populates="student"
     )
+
+    marks_records = db.relationship(
+    "Marks",
+    back_populates="student"
+    )
+
+    complaints = db.relationship(
+    "Complaint",
+    back_populates="student"
+    )
+
+    leave_applications = db.relationship(
+    "LeaveApplication",
+    back_populates="student"
+    )

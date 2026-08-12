@@ -6,8 +6,7 @@ class Notes(db.Model):
 
     note_id = db.Column(
         db.Integer,
-        primary_key=True,
-        autoincrement=True
+        primary_key=True
     )
 
     subject_id = db.Column(
@@ -34,4 +33,14 @@ class Notes(db.Model):
 
     uploaded_at = db.Column(
         db.DateTime
+    )
+
+    subject = db.relationship(
+        "Subject",
+        back_populates="notes"
+    )
+
+    staff = db.relationship(
+        "Staff",
+        back_populates="notes"
     )

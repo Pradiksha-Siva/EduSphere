@@ -69,3 +69,23 @@ class Staff(db.Model):
     "Assignment",
     back_populates="staff"
     )
+
+    notes = db.relationship(
+    "Notes",
+    back_populates="staff"
+    )
+
+    notices = db.relationship(
+    "Notice",
+    back_populates="staff"
+    )
+
+    assigned_complaints = db.relationship(
+    "Complaint",
+    back_populates="staff"
+    )
+
+    approved_leaves = db.relationship(
+    "LeaveApplication",
+    back_populates="staff"
+    )
