@@ -200,3 +200,72 @@ body:has(.login-container) {
     color: #c0392b;
     font-size: 13px;
 }
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 65px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+    color: var(--muted);
+
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.password-toggle:hover {
+    color: var(--text);
+}
+/* Password Show/Hide button */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 60px;
+}
+
+.password-wrapper .password-toggle {
+    position: absolute !important;
+    top: 50% !important;
+    right: 10px !important;
+    transform: translateY(-50%) !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 4px 6px !important;
+
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+
+    color: #68758f !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+
+    cursor: pointer;
+}
+
+.password-wrapper .password-toggle:hover {
+    background: transparent !important;
+    color: #1d2a44 !important;
+}
