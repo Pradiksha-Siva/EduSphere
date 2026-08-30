@@ -1,7 +1,7 @@
+from config import Config
 from flask import Flask, render_template
 from routes.auth import auth
 from flask import Flask
-from config import Config
 from flask import Flask, render_template, session, jsonify
 from extensions import db
 from models import (
@@ -21,7 +21,6 @@ from models import (
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
 db.init_app(app)
 app.register_blueprint(auth)
 
