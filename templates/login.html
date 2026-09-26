@@ -70,31 +70,7 @@
                 </div>
 
 
-                <!-- Department -->
-                <div class="field">
-                    <label for="department">Department</label>
-
-                    <select
-                        id="department"
-                        name="department_id"
-                        required
-                    >
-
-                        <option value="">
-                            Select Department
-                        </option>
-
-                        {% for dept in departments %}
-
-                            <option value="{{ dept.department_id }}">
-                                {{ dept.department_name }}
-                            </option>
-
-                        {% endfor %}
-
-                    </select>
-                </div>
-
+                
 
                 <!-- Error Message -->
                 {% if error %}

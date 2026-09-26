@@ -1,49 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduSphere — Department Portal</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduSphere — Department Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
+
+
 <body>
 
-<aside id="sidebar">
-  <div class="brand">EduSphere</div>
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside id="sidebar">
+
+        <div class="brand">
+            EduSphere
+        </div>
+
+        <ul class="nav-list" id="navList"></ul>
 
 
-  <ul class="nav-list" id="navList"></ul>
-</aside>
+        <!-- Logout -->
 
-<main id="main-content">
-  <header>
-    <div>
-      <h2 id="page-title">Dashboard</h2>
-      <div class="dept-pill" id="deptPill">
-    {{ department_name }}
-</div>
-    </div>
-    <div class="user-profile">
-      <div>
-        <div id="userName" style="font-weight:600; font-size:13px; text-align:right;">
-    {{ user_name }}
-</div>
-        <div class="user-role" id="userRole">Student</div>
-      </div>
-      <div class="avatar" id="userAvatar">S</div>
-    </div>
-  </header>
-  <div class="content-area" id="viewContainer"></div>
-</main>
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('auth.logout') }}"
+               class="logout-nav">
+
+                <span class="logout-icon">↪</span>
+
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
 
 
-<script>
-    window.USER_ROLE = "{{ user_role }}";
-    window.USER_DEPARTMENT = "{{ department_name }}";
-</script>
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main id="main-content">
+
+
+        <!-- Header -->
+
+        <header>
+
+            <div>
+
+                <h2 id="page-title">
+                    Dashboard
+                </h2>
+
+                <div class="dept-pill" id="deptPill">
+                    {{ department_name }}
+                </div>
+
+            </div>
+
+
+            <!-- User Profile -->
+
+            <div class="user-profile">
+
+                <div>
+
+                    <div id="userName"
+                         style="font-weight:600;
+                                font-size:13px;
+                                text-align:right;">
+
+                        {{ user_name }}
+
+                    </div>
+
+                    <div class="user-role"
+                         id="userRole">
+
+                        Student
+
+                    </div>
+
+                </div>
+
+
+                <div class="avatar"
+                     id="userAvatar">
+
+                    S
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Dashboard Content -->
+
+        <div class="content-area"
+             id="viewContainer">
+        </div>
+
+
+    </main>
+
+
+    <!-- ================= USER DATA ================= -->
+
+    <script>
+
+        window.USER_ROLE = "{{ user_role }}";
+
+        window.USER_DEPARTMENT = "{{ department_name }}";
+
+    </script>
+
+
+    <!-- ================= DASHBOARD JAVASCRIPT ================= -->
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 
 </body>
+
 </html>

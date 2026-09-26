@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from werkzeug.security import check_password_hash
 
-from models import Student, Staff, Admin, Department
+from models import Student, Staff, Admin
 
 
 auth = Blueprint("auth", __name__)
@@ -10,33 +10,20 @@ auth = Blueprint("auth", __name__)
 @auth.route("/login", methods=["GET", "POST"])
 def login():
 
-    departments = Department.query.all()
-
     if request.method == "POST":
 
         email = request.form.get("email")
         password = request.form.get("password")
-        department_id = request.form.get("department_id")
 
-        # -------------------------
-        # Check Student
-        # -------------------------
+
+        # ================= STUDENT LOGIN =================
+
         student = Student.query.filter_by(email=email).first()
 
         if student and check_password_hash(
             student.password_hash,
             password
         ):
-
-            # If student already has a department,
-            # verify the selected department matches it.
-            if student.department_id is not None:
-                if str(student.department_id) != department_id:
-                    return render_template(
-                        "login.html",
-                        departments=departments,
-                        error="Incorrect department for this account."
-                    )
 
             session["user_id"] = student.student_id
             session["user_role"] = "student"
@@ -45,23 +32,15 @@ def login():
 
             return redirect(url_for("dashboard"))
 
-        # -------------------------
-        # Check Staff
-        # -------------------------
+
+        # ================= STAFF LOGIN =================
+
         staff = Staff.query.filter_by(email=email).first()
 
         if staff and check_password_hash(
             staff.password_hash,
             password
         ):
-
-            if staff.department_id is not None:
-                if str(staff.department_id) != department_id:
-                    return render_template(
-                        "login.html",
-                        departments=departments,
-                        error="Incorrect department for this account."
-                    )
 
             session["user_id"] = staff.staff_id
             session["user_role"] = "faculty"
@@ -70,9 +49,9 @@ def login():
 
             return redirect(url_for("dashboard"))
 
-        # -------------------------
-        # Check Admin
-        # -------------------------
+
+        # ================= ADMIN LOGIN =================
+
         admin = Admin.query.filter_by(email=email).first()
 
         if admin and check_password_hash(
@@ -83,22 +62,27 @@ def login():
             session["user_id"] = admin.admin_id
             session["user_role"] = "admin"
             session["user_name"] = admin.admin_name
-
-            # Admin doesn't need a department
             session["department_id"] = None
 
             return redirect(url_for("dashboard"))
 
-        # -------------------------
-        # Invalid login
-        # -------------------------
+
+        # ================= INVALID LOGIN =================
+
         return render_template(
             "login.html",
-            departments=departments,
             error="Invalid email or password"
         )
 
-    return render_template(
-        "login.html",
-        departments=departments
-    )
+
+    return render_template("login.html")
+
+
+# ================= LOGOUT =================
+
+@auth.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect(url_for("auth.login"))
