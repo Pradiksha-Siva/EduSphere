@@ -8,15 +8,19 @@
 
     <title>EduSphere — Department Portal</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
 
 </head>
 
 
 <body>
 
-    <!-- ================= SIDEBAR ================= -->
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
 
     <aside id="sidebar">
 
@@ -24,15 +28,20 @@
             EduSphere
         </div>
 
-        <ul class="nav-list" id="navList"></ul>
+        <ul
+            class="nav-list"
+            id="navList"
+        ></ul>
 
 
-        <!-- Logout -->
+        <!-- LOGOUT -->
 
         <div class="sidebar-bottom">
 
-            <a href="{{ url_for('auth.logout') }}"
-               class="logout-nav">
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="logout-nav"
+            >
 
                 <span class="logout-icon">↪</span>
 
@@ -45,12 +54,11 @@
     </aside>
 
 
-    <!-- ================= MAIN CONTENT ================= -->
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
 
     <main id="main-content">
-
-
-        <!-- Header -->
 
         <header>
 
@@ -60,43 +68,48 @@
                     Dashboard
                 </h2>
 
-                <div class="dept-pill" id="deptPill">
+                <div
+                    class="dept-pill"
+                    id="deptPill"
+                >
                     {{ department_name }}
                 </div>
 
             </div>
 
 
-            <!-- User Profile -->
+            <!-- USER PROFILE -->
 
             <div class="user-profile">
 
                 <div>
 
-                    <div id="userName"
-                         style="font-weight:600;
-                                font-size:13px;
-                                text-align:right;">
-
+                    <div
+                        id="userName"
+                        style="
+                            font-weight:600;
+                            font-size:13px;
+                            text-align:right;
+                        "
+                    >
                         {{ user_name }}
-
                     </div>
 
-                    <div class="user-role"
-                         id="userRole">
-
+                    <div
+                        class="user-role"
+                        id="userRole"
+                    >
                         Student
-
                     </div>
 
                 </div>
 
 
-                <div class="avatar"
-                     id="userAvatar">
-
+                <div
+                    class="avatar"
+                    id="userAvatar"
+                >
                     S
-
                 </div>
 
             </div>
@@ -104,17 +117,17 @@
         </header>
 
 
-        <!-- Dashboard Content -->
+        <!-- DYNAMIC CONTENT -->
 
-        <div class="content-area"
-             id="viewContainer">
-        </div>
-
+        <div
+            class="content-area"
+            id="viewContainer"
+        ></div>
 
     </main>
 
 
-    <!-- ================= USER DATA ================= -->
+    <!-- SERVER VALUES -->
 
     <script>
 
@@ -125,9 +138,11 @@
     </script>
 
 
-    <!-- ================= DASHBOARD JAVASCRIPT ================= -->
+    <!-- DASHBOARD JS -->
 
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
 
 
 </body>
