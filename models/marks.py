@@ -26,6 +26,11 @@ class Marks(db.Model):
     marks_obtained = db.Column(
         db.Numeric(5, 2)
     )
+    is_published = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
+    )
 
     maximum_marks = db.Column(
         db.Numeric(5, 2)

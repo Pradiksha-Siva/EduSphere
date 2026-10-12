@@ -1,9 +1,9 @@
 from config import Config
 from flask import Flask, render_template
 from routes.auth import auth
-from flask import Flask
 from flask import Flask, render_template, session, jsonify
 from extensions import db
+
 from models import (
     Department,
     Staff,
@@ -181,6 +181,32 @@ def get_timetable():
         })
 
     return jsonify(timetable_data)
+@app.route("/api/faculty/subjects")
+def get_faculty_subjects():
+
+    if session.get("user_role") != "faculty":
+        return jsonify({"error": "Faculty login required"}), 403
+
+    staff_id = session.get("user_id")
+
+    subjects = (
+        Subject.query
+        .filter_by(staff_id=staff_id)
+        .order_by(Subject.subject_name.asc())
+        .all()
+    )
+
+    return jsonify([
+        {
+            "subject_id": subject.subject_id,
+            "subject_name": subject.subject_name,
+            "subject_code": subject.subject_code,
+            "semester": subject.semester
+        }
+        for subject in subjects
+    ])
+
+
 
 @app.route("/api/attendance")
 def get_attendance():
@@ -304,6 +330,39 @@ def get_attendance():
         "subjects": subjects,
         "records": records
     })
+
+@app.route("/api/leave-applications", methods=["GET"])
+def get_leave_applications():
+    if session.get("user_role") != "student":
+        return jsonify({"error": "Student login required"}), 403
+
+    student_id = session.get("user_id")
+
+    applications = (
+        LeaveApplication.query
+        .filter_by(student_id=student_id)
+        .order_by(LeaveApplication.applied_at.desc())
+        .all()
+    )
+
+    return jsonify([
+        {
+            "leave_id": item.leave_id,
+            "from_date": item.from_date.isoformat() if item.from_date else "",
+            "to_date": item.to_date.isoformat() if item.to_date else "",
+            "reason": item.reason or "",
+            "status": item.status or "Pending",
+            "applied_at": (
+                item.applied_at.strftime("%d %b %Y")
+                if item.applied_at else ""
+            )
+        }
+        for item in applications
+    ])
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

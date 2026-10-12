@@ -103,17 +103,21 @@ const roleConfig = {
     },
 
     faculty: {
-        label: "Faculty",
+    label: "Faculty",
 
-        defaultView: "faculty-dashboard",
+    defaultView: "faculty-dashboard",
 
-        navigation: [
-            {
-                id: "faculty-dashboard",
-                label: "Dashboard"
-            }
-        ]
-    },
+    navigation: [
+        {
+            id: "faculty-dashboard",
+            label: "Dashboard"
+        },
+        {
+            id: "faculty-marks",
+            label: "Marks Entry"
+        }
+    ]
+},
 
     admin: {
         label: "Admin",
@@ -389,16 +393,21 @@ function loadView(
     }
 
 
-    if (
+        if (
         viewId === "std-attendance" &&
         typeof loadStudentAttendance === "function"
     ) {
         loadStudentAttendance();
     }
 
+    if (
+        viewId === "faculty-marks" &&
+        typeof loadFacultySubjects === "function"
+    ) {
+        loadFacultySubjects();
+    }
+
 }
-
-
 /* =========================================================
    TEMPLATE RENDERING
    ========================================================= */
@@ -663,24 +672,13 @@ function renderTemplate(
        ===================================================== */
 
     if (viewId === "std-notes") {
-
         return `
-
             <div class="section-title">
-
-                <h3>
-                    Notes
-                </h3>
-
+                <h3>Notes</h3>
             </div>
-
-
-            <div class="empty-state">
-
-                Notes will appear here.
-
+            <div id="notesContainer">
+                <p style="color:var(--muted);font-size:13px;">Loading notes...</p>
             </div>
-
         `;
     }
 
@@ -690,47 +688,13 @@ function renderTemplate(
        ===================================================== */
 
     if (viewId === "std-assignments") {
-
         return `
-
             <div class="section-title">
-
-                <h3>
-                    Assignments
-                </h3>
-
+                <h3>Assignments</h3>
             </div>
-
-
-            <div class="grid">
-
-                <div class="card item-card">
-
-                    <h4>
-                        SQL Queries Practice
-                    </h4>
-
-                    <div class="meta">
-                        Database Systems · Due 25 Oct
-                    </div>
-
-                </div>
-
-
-                <div class="card item-card">
-
-                    <h4>
-                        Web Prototype
-                    </h4>
-
-                    <div class="meta">
-                        Web Development · Due 28 Oct
-                    </div>
-
-                </div>
-
+            <div id="assignmentsContainer">
+                <p style="color:var(--muted);font-size:13px;">Loading assignments...</p>
             </div>
-
         `;
     }
 
@@ -740,34 +704,13 @@ function renderTemplate(
        ===================================================== */
 
     if (viewId === "std-attendance") {
-
         return `
-
             <div class="section-title">
-
-                <h3>
-                    Attendance
-                </h3>
-
+                <h3>Attendance</h3>
             </div>
-
-
-            <div class="grid">
-
-                <div class="card">
-
-                    <h3>
-                        Overall Attendance
-                    </h3>
-
-                    <div class="value">
-                        88%
-                    </div>
-
-                </div>
-
+            <div id="attendanceContainer">
+                <p style="color:var(--muted);font-size:13px;">Loading attendance...</p>
             </div>
-
         `;
     }
 
@@ -831,26 +774,19 @@ function renderTemplate(
        ===================================================== */
 
     if (viewId === "std-leave") {
-
         return `
-
             <div class="section-title">
-
                 <h3>
                     Leave Application
                 </h3>
-
             </div>
-
 
             <div class="empty-state">
-
                 Leave applications will appear here.
-
             </div>
-
         `;
     }
+
 
 
     /* =====================================================
@@ -878,8 +814,125 @@ function renderTemplate(
 
         `;
     }
+    if (viewId === "faculty-marks") {
+        return `
+        <div class="marks-page">
 
+            <div class="marks-page-header">
+                <div>
+                    <p class="marks-eyebrow">ACADEMIC MANAGEMENT</p>
+                    <h2>Marks Entry</h2>
+                    <p class="marks-subtitle">
+                        Enter, review and manage student examination marks.
+                    </p>
+                </div>
+                <div class="marks-header-icon">ME</div>
+            </div>
 
+            <div class="marks-info-grid">
+                <div class="marks-info-card">
+                    <span class="marks-info-label">WORKFLOW</span>
+                    <h3>Draft → Publish</h3>
+                    <p>Students can view marks after publication.</p>
+                </div>
+                <div class="marks-info-card">
+                    <span class="marks-info-label">EXAMINATIONS</span>
+                    <h3>6 assessment types</h3>
+                    <p>Internal, semester, practical and assignment marks.</p>
+                </div>
+            </div>
+
+            <div class="marks-form-card">
+                <div class="marks-card-heading">
+                    <div>
+                        <h3>Student Assessment</h3>
+                        <p>Enter the details carefully before submitting.</p>
+                    </div>
+                    <span class="marks-step-label">STEP 1 OF 2</span>
+                </div>
+
+                <form id="marksEntryForm">
+
+                    <div class="marks-form-grid">
+                        <div class="marks-field">
+                            <label for="marksSubject">Subject</label>
+                            <select id="marksSubject" name="subject_id" required>
+                                <option value="">Select subject</option>
+                            </select>
+                        </div>
+
+                        <div class="marks-field">
+                            <label for="marksExamType">Examination Type</label>
+                            <select id="marksExamType" name="exam_type" required>
+                                <option value="">Select examination</option>
+                                <option value="First Internal">First Internal</option>
+                                <option value="Second Internal">Second Internal</option>
+                                <option value="Third Internal">Third Internal</option>
+                                <option value="Semester Examination">Semester Examination</option>
+                                <option value="Practical Examination">Practical Examination</option>
+                                <option value="Assignment">Assignment</option>
+                            </select>
+                        </div>
+
+                        <div class="marks-field marks-field-full">
+                            <label for="marksStudent">Student Register Number</label>
+                            <input
+                                type="text"
+                                id="marksStudent"
+                                name="register_no"
+                                placeholder="Enter student register number"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+
+                        <div class="marks-field">
+                            <label for="marksObtained">Marks Obtained</label>
+                            <input
+                                type="number"
+                                id="marksObtained"
+                                name="marks_obtained"
+                                placeholder="e.g. 85"
+                                min="0"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <div class="marks-field">
+                            <label for="marksMaximum">Maximum Marks</label>
+                            <input
+                                type="number"
+                                id="marksMaximum"
+                                name="maximum_marks"
+                                placeholder="e.g. 100"
+                                min="0.01"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="marks-preview">
+                        <div>
+                            <span>Assessment percentage</span>
+                            <strong id="marksPercentage">—</strong>
+                        </div>
+                        <p>Calculated automatically from the entered marks.</p>
+                    </div>
+
+                    <div class="marks-form-footer">
+                        <p id="marksEntryMessage" role="status" aria-live="polite"></p>
+                        <button type="submit" class="marks-submit-btn">
+                            Submit Marks
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    `;
+}
     /* =====================================================
        ADMIN DASHBOARD
        ===================================================== */
@@ -905,7 +958,6 @@ function renderTemplate(
 
         `;
     }
-
 
     /* =====================================================
        FALLBACK
@@ -1031,3 +1083,447 @@ loadView(
     "Dashboard",
     null
 );
+
+function seal(status) {
+  const map = { approved: 'Approved', pending: 'Pending', rejected: 'Rejected' };
+  return `<span class="seal seal-${status}">${map[status]}</span>`;
+}
+
+async function loadStudentNotes() {
+
+    const container = document.getElementById("notesContainer");
+
+    if (!container) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch("/api/notes");
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            container.innerHTML = `
+                <p style="color:red;">
+                    ${data.error || "Unable to load notes."}
+                </p>
+            `;
+
+            return;
+        }
+
+        if (data.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-state">
+                    No notes available for your department.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="grid">
+
+                ${data.map(note => `
+
+                    <div class="card item-card">
+
+                        ${seal('approved')}
+
+                        <h4>${note.title}</h4>
+
+                        <div class="meta">
+                            ${note.subject_name}
+                            -+ ${note.subject_code}
+                            -+ Semester ${note.semester}
+                        </div>
+
+                        <p style="
+                            color:var(--muted);
+                            font-size:13px;
+                            margin-top:10px;
+                        ">
+                            ${note.description || ""}
+                        </p>
+
+                        ${
+                            note.file_url
+                            ? `
+                                <div style="margin-top:12px;">
+                                    <a
+                                        href="${note.file_url}"
+                                        target="_blank"
+                                        class="btn btn-outline"
+                                    >
+                                        View / Download
+                                    </a>
+                                </div>
+                            `
+                            : ""
+                        }
+
+                        <div style="
+                            color:var(--muted);
+                            font-size:11px;
+                            margin-top:10px;
+                        ">
+                            Uploaded: ${note.uploaded_at}
+                        </div>
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error("Notes loading error:", error);
+
+        container.innerHTML = `
+            <p style="color:red;">
+                Unable to connect to the server.
+            </p>
+        `;
+    }
+}
+
+
+async function loadStudentAssignments() {
+
+    const container =
+        document.getElementById("assignmentsContainer");
+
+    if (!container) {
+        console.error("assignmentsContainer not found");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch("/api/assignments");
+
+        const data =
+            await response.json();
+
+        console.log("Assignments received:", data);
+
+        if (!response.ok) {
+
+            container.innerHTML = `
+                <p style="color:red;">
+                    ${data.error || "Unable to load assignments."}
+                </p>
+            `;
+
+            return;
+        }
+
+        if (data.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-state">
+                    No assignments available for your department.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="grid">
+
+                ${data.map(assignment => `
+
+                    <div class="card item-card">
+
+                        ${seal('approved')}
+
+                        <h4>${assignment.title}</h4>
+
+                        <div class="meta">
+                            ${assignment.subject_name}
+                            -+ ${assignment.subject_code}
+                            -+ Semester ${assignment.semester}
+                        </div>
+
+                        <p style="
+                            color:var(--muted);
+                            font-size:13px;
+                            margin-top:10px;
+                        ">
+                            ${assignment.description || ""}
+                        </p>
+
+                        <div style="
+                            margin-top:12px;
+                            color:var(--muted);
+                            font-size:12px;
+                        ">
+                            Due: ${assignment.due_date}
+                        </div>
+
+                        ${
+                            assignment.file_url
+                            ? `
+                                <div style="margin-top:12px;">
+                                    <a
+                                        href="${assignment.file_url}"
+                                        target="_blank"
+                                        class="btn btn-outline"
+                                    >
+                                        View / Download
+                                    </a>
+                                </div>
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Assignments loading error:",
+            error
+        );
+
+        container.innerHTML = `
+            <p style="color:red;">
+                Unable to connect to the server.
+            </p>
+        `;
+    }
+}
+
+
+/* =========================
+   STUDENT ATTENDANCE
+   ========================= */
+
+async function loadStudentAttendance() {
+
+    const container =
+        document.getElementById("attendanceContainer");
+
+    if (!container) {
+        console.error("attendanceContainer not found");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch("/api/attendance");
+
+        const data =
+            await response.json();
+
+        console.log("Attendance received:", data);
+
+        if (!response.ok) {
+
+            container.innerHTML = `
+                <p style="color:red;">
+                    ${data.error || "Unable to load attendance."}
+                </p>
+            `;
+
+            return;
+        }
+
+        if (data.overall.total === 0) {
+
+            container.innerHTML = `
+                <div class="empty-state">
+                    No attendance records available yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = `
+
+            <div class="grid">
+
+                <div class="card">
+                    <h3>Overall Attendance</h3>
+                    <div class="value">
+                        ${data.overall.percentage}%
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Present Days</h3>
+                    <div class="value">
+                        ${data.overall.present}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Total Classes</h3>
+                    <div class="value">
+                        ${data.overall.total}
+                    </div>
+                </div>
+
+            </div>
+
+            <h3 style="
+                font-family:var(--font-display);
+                font-size:16px;
+                margin-top:24px;
+            ">
+                Subject-wise Attendance
+            </h3>
+
+            <table>
+
+                <tr>
+                    <th>Subject</th>
+                    <th>Code</th>
+                    <th>Present</th>
+                    <th>Total</th>
+                    <th>Percentage</th>
+                </tr>
+
+                ${data.subjects.map(subject => `
+
+                    <tr>
+
+                        <td>
+                            ${subject.subject_name}
+                        </td>
+
+                        <td>
+                            ${subject.subject_code}
+                        </td>
+
+                        <td>
+                            ${subject.present}
+                        </td>
+
+                        <td>
+                            ${subject.total}
+                        </td>
+
+                        <td>
+                            ${subject.percentage}%
+                        </td>
+
+                    </tr>
+
+                `).join("")}
+
+            </table>
+
+            <h3 style="
+                font-family:var(--font-display);
+                font-size:16px;
+                margin-top:24px;
+            ">
+                Attendance History
+            </h3>
+
+            <table>
+
+                <tr>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+
+                ${data.records.map(record => `
+
+                    <tr>
+
+                        <td>
+                            ${record.subject_name}
+                            <div style="
+                                color:var(--muted);
+                                font-size:11px;
+                            ">
+                                ${record.subject_code}
+                            </div>
+                        </td>
+
+                        <td>
+                            ${record.date}
+                        </td>
+
+                        <td>
+                            ${record.status}
+                        </td>
+
+                    </tr>
+
+                `).join("")}
+
+            </table>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Attendance loading error:",
+            error
+        );
+
+        container.innerHTML = `
+            <p style="color:red;">
+                Unable to connect to the server.
+            </p>
+        `;
+    }
+}
+async function loadFacultySubjects() {
+
+    const subjectSelect = document.getElementById("marksSubject");
+
+    if (!subjectSelect) {
+        return;
+    }
+
+    subjectSelect.innerHTML = '<option value="">Loading subjects...</option>';
+
+    try {
+        const response = await fetch("/api/faculty/subjects");
+
+        if (!response.ok) {
+            throw new Error("Could not load subjects");
+        }
+
+        const subjects = await response.json();
+
+        subjectSelect.innerHTML = '<option value="">Select subject</option>';
+
+        if (subjects.length === 0) {
+            subjectSelect.innerHTML = '<option value="">No assigned subjects</option>';
+            return;
+        }
+
+        subjects.forEach(subject => {
+            const option = document.createElement("option");
+            option.value = subject.subject_id;
+            option.textContent =
+                `${subject.subject_code} - ${subject.subject_name} (Semester ${subject.semester ?? "N/A"})`;
+
+            subjectSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error("Faculty subjects error:", error);
+        subjectSelect.innerHTML = '<option value="">Failed to load subjects</option>';
+    }
+}
