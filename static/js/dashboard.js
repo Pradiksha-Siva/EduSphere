@@ -363,7 +363,9 @@ function loadView(
             viewId,
             USER_DEPARTMENT
         );
-
+    if (viewId === "std-dashboard") {
+        loadTimetable();
+    }
 
     /*
      * Existing student data loaders can
@@ -540,221 +542,11 @@ function renderTemplate(
             </div>
 
 
-            <div class="dashboard-table-wrapper">
+            
+<div class="dashboard-table-wrapper" id="timetableContainer">
+    <p>Loading timetable...</p>
+</div>
 
-                <table class="dashboard-timetable">
-
-
-                    <!-- =====================================
-                         FIRST ROW = TIMINGS
-                         ===================================== -->
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Day
-                            </th>
-
-                            <th>
-                                9:00 – 10:00
-                            </th>
-
-                            <th>
-                                10:00 – 11:00
-                            </th>
-
-                            <th>
-                                11:15 – 12:15
-                            </th>
-
-                            <th>
-                                1:15 – 2:15
-                            </th>
-
-                            <th>
-                                2:15 – 3:15
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <!-- =================================
-                             MONDAY
-                             ================================= -->
-
-                        <tr>
-
-                            <td>
-                                Monday
-                            </td>
-
-                            <td>
-                                Database Systems
-                            </td>
-
-                            <td>
-                                Web Development
-                            </td>
-
-                            <td>
-                                Artificial Intelligence
-                            </td>
-
-                            <td>
-                                Data Structures
-                            </td>
-
-                            <td>
-                                Web Development Lab
-                            </td>
-
-                        </tr>
-
-
-                        <!-- =================================
-                             TUESDAY
-                             ================================= -->
-
-                        <tr>
-
-                            <td>
-                                Tuesday
-                            </td>
-
-                            <td>
-                                Web Development
-                            </td>
-
-                            <td>
-                                Artificial Intelligence
-                            </td>
-
-                            <td>
-                                Data Structures
-                            </td>
-
-                            <td>
-                                Database Systems
-                            </td>
-
-                            <td>
-                                Project Work
-                            </td>
-
-                        </tr>
-
-
-                        <!-- =================================
-                             WEDNESDAY
-                             ================================= -->
-
-                        <tr>
-
-                            <td>
-                                Wednesday
-                            </td>
-
-                            <td>
-                                Data Structures
-                            </td>
-
-                            <td>
-                                Database Systems
-                            </td>
-
-                            <td>
-                                Web Development
-                            </td>
-
-                            <td>
-                                Artificial Intelligence
-                            </td>
-
-                            <td>
-                                Database Lab
-                            </td>
-
-                        </tr>
-
-
-                        <!-- =================================
-                             THURSDAY
-                             ================================= -->
-
-                        <tr>
-
-                            <td>
-                                Thursday
-                            </td>
-
-                            <td>
-                                Artificial Intelligence
-                            </td>
-
-                            <td>
-                                Data Structures
-                            </td>
-
-                            <td>
-                                Database Systems
-                            </td>
-
-                            <td>
-                                Web Development
-                            </td>
-
-                            <td>
-                                Project Work
-                            </td>
-
-                        </tr>
-
-
-                        <!-- =================================
-                             FRIDAY
-                             ================================= -->
-
-                        <tr>
-
-                            <td>
-                                Friday
-                            </td>
-
-                            <td>
-                                Database Systems
-                            </td>
-
-                            <td>
-                                Web Development
-                            </td>
-
-                            <td>
-                                Artificial Intelligence
-                            </td>
-
-                            <td>
-                                Data Structures
-                            </td>
-
-                            <td>
-                                Seminar
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
 
 
             <!-- =============================================
@@ -1129,6 +921,101 @@ function renderTemplate(
 
     `;
 
+}
+
+async function loadTimetable() {
+    const container = document.getElementById("timetableContainer");
+
+    if (!container) return;
+
+    container.textContent = "Loading timetable...";
+
+    try {
+        const response = await fetch("/api/timetable");
+
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        const entries = await response.json();
+
+        if (entries.length === 0) {
+            container.textContent =
+                "No timetable entries found for your class.";
+            return;
+        }
+
+        const periods = [
+            "8:30–9:15",
+            "9:15–10:00",
+            "10:00–10:45",
+            "11:00–11:45",
+            "11:45–12:30",
+            "12:30–1:15",
+            "2:00–2:45",
+            "2:45–3:30",
+            "3:45–4:35"
+        ];
+
+        const days = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        const table = document.createElement("table");
+        table.className = "dashboard-timetable";
+
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+
+        ["Day / Time", ...periods].forEach(label => {
+            const th = document.createElement("th");
+            th.textContent = label;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        days.forEach(day => {
+            const row = document.createElement("tr");
+
+            const dayCell = document.createElement("td");
+            dayCell.textContent = day;
+            row.appendChild(dayCell);
+
+            for (let period = 1; period <= 9; period++) {
+                const cell = document.createElement("td");
+
+                const entry = entries.find(item =>
+                    item.day_of_week === day &&
+                    Number(item.period_number) === period
+                );
+
+                cell.textContent = entry
+                    ? entry.subject_name
+                    : "";
+
+                row.appendChild(cell);
+            }
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        container.replaceChildren(table);
+
+    } catch (error) {
+        console.error("Timetable loading error:", error);
+        container.textContent =
+            "Unable to load timetable. Please try again.";
+    }
 }
 
 

@@ -16,7 +16,8 @@ from models import (
     Notes,
     Notice,
     Complaint,
-    LeaveApplication
+    LeaveApplication,
+    Timetable
 )
 
 app = Flask(__name__)
@@ -127,6 +128,60 @@ def get_assignments():
         })
 
     return jsonify(assignments_data)
+
+@app.route("/api/timetable")
+def get_timetable():
+
+    if "user_role" not in session:
+        return jsonify({"error": "Please login first"}), 401
+
+    if session.get("user_role") != "student":
+        return jsonify({
+            "error": "Student login required"
+        }), 403
+
+    student_id = session.get("user_id")
+
+    student = Student.query.get(student_id)
+
+    if not student:
+        return jsonify({
+            "error": "Student not found"
+        }), 404
+
+    timetable_entries = (
+        Timetable.query
+        .filter_by(
+            department_id=student.department_id,
+            academic_year=student.year,
+            semester=student.semester,
+            section=student.section
+        )
+        .order_by(
+            Timetable.day_of_week,
+            Timetable.period_number
+        )
+        .all()
+    )
+
+    timetable_data = []
+
+    for entry in timetable_entries:
+        timetable_data.append({
+            "day_of_week": entry.day_of_week,
+            "period_number": entry.period_number,
+            "start_time": entry.start_time.strftime("%H:%M"),
+            "end_time": entry.end_time.strftime("%H:%M"),
+            "subject_name": entry.subject.subject_name,
+            "staff_name": (
+                entry.staff.staff_name
+                if entry.staff else None
+            ),
+            "room_number": entry.room_number
+        })
+
+    return jsonify(timetable_data)
+
 @app.route("/api/attendance")
 def get_attendance():
 

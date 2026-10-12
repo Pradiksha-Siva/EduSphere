@@ -68,12 +68,9 @@
                     Dashboard
                 </h2>
 
-                <div
-                    class="dept-pill"
-                    id="deptPill"
-                >
-                    {{ department_name }}
-                </div>
+                <div class="dept-pill" id="deptPill">
+    {{ department_name|safe }}
+</div>
 
             </div>
 
@@ -133,8 +130,7 @@
 
         window.USER_ROLE = "{{ user_role }}";
 
-        window.USER_DEPARTMENT = "{{ department_name }}";
-
+        window.USER_DEPARTMENT = {{ department_name | tojson }};
     </script>
 
 

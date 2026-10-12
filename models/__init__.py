@@ -10,3 +10,4 @@ from .notes import Notes
 from .notice import Notice
 from .complaint import Complaint
 from .leaveapplication import LeaveApplication
+from .timetable import Timetable
