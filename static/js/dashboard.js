@@ -107,16 +107,22 @@ const roleConfig = {
 
     defaultView: "faculty-dashboard",
 
-    navigation: [
-        {
-            id: "faculty-dashboard",
-            label: "Dashboard"
-        },
-        {
-            id: "faculty-marks",
-            label: "Marks Entry"
-        }
-    ]
+    
+navigation: [
+    {
+        id: "faculty-dashboard",
+        label: "Dashboard"
+    },
+    {
+        id: "faculty-marks",
+        label: "Marks Entry"
+    },
+    {
+        id: "faculty-timetable",
+        label: "My Timetable"
+    }
+]
+
 },
 
     admin: {
@@ -826,21 +832,12 @@ function renderTemplate(
                         Enter, review and manage student examination marks.
                     </p>
                 </div>
-                <div class="marks-header-icon">ME</div>
+                
             </div>
 
-            <div class="marks-info-grid">
-                <div class="marks-info-card">
-                    <span class="marks-info-label">WORKFLOW</span>
-                    <h3>Draft → Publish</h3>
-                    <p>Students can view marks after publication.</p>
-                </div>
-                <div class="marks-info-card">
-                    <span class="marks-info-label">EXAMINATIONS</span>
-                    <h3>6 assessment types</h3>
-                    <p>Internal, semester, practical and assignment marks.</p>
-                </div>
-            </div>
+            
+                
+
 
             <div class="marks-form-card">
                 <div class="marks-card-heading">
@@ -848,87 +845,110 @@ function renderTemplate(
                         <h3>Student Assessment</h3>
                         <p>Enter the details carefully before submitting.</p>
                     </div>
-                    <span class="marks-step-label">STEP 1 OF 2</span>
+                    
                 </div>
 
-                <form id="marksEntryForm">
+                
+<form id="marksEntryForm">
 
-                    <div class="marks-form-grid">
-                        <div class="marks-field">
-                            <label for="marksSubject">Subject</label>
-                            <select id="marksSubject" name="subject_id" required>
-                                <option value="">Select subject</option>
-                            </select>
-                        </div>
+    <div class="marks-form-grid">
+        <div class="marks-field">
+            <label for="marksSubject">Subject</label>
+            <select id="marksSubject" name="subject_id" required>
+                <option value="">Select subject</option>
+            </select>
 
-                        <div class="marks-field">
-                            <label for="marksExamType">Examination Type</label>
-                            <select id="marksExamType" name="exam_type" required>
-                                <option value="">Select examination</option>
-                                <option value="First Internal">First Internal</option>
-                                <option value="Second Internal">Second Internal</option>
-                                <option value="Third Internal">Third Internal</option>
-                                <option value="Semester Examination">Semester Examination</option>
-                                <option value="Practical Examination">Practical Examination</option>
-                                <option value="Assignment">Assignment</option>
-                            </select>
-                        </div>
+        </div>
 
-                        <div class="marks-field marks-field-full">
-                            <label for="marksStudent">Student Register Number</label>
-                            <input
-                                type="text"
-                                id="marksStudent"
-                                name="register_no"
-                                placeholder="Enter student register number"
-                                autocomplete="off"
-                                required
-                            >
-                        </div>
 
-                        <div class="marks-field">
-                            <label for="marksObtained">Marks Obtained</label>
-                            <input
-                                type="number"
-                                id="marksObtained"
-                                name="marks_obtained"
-                                placeholder="e.g. 85"
-                                min="0"
-                                step="0.01"
-                                required
-                            >
-                        </div>
+<div class="marks-field">
+    <label for="marksAcademicYear">Academic Year</label>
+    <select id="marksAcademicYear" name="academic_year" required>
+        <option value="">Select year</option>
+        <option value="1">Year 1</option>
+        <option value="2">Year 2</option>
+        <option value="3">Year 3</option>
+        <option value="4">Year 4</option>
+    </select>
+</div>
 
-                        <div class="marks-field">
-                            <label for="marksMaximum">Maximum Marks</label>
-                            <input
-                                type="number"
-                                id="marksMaximum"
-                                name="maximum_marks"
-                                placeholder="e.g. 100"
-                                min="0.01"
-                                step="0.01"
-                                required
-                            >
-                        </div>
-                    </div>
 
-                    <div class="marks-preview">
-                        <div>
-                            <span>Assessment percentage</span>
-                            <strong id="marksPercentage">—</strong>
-                        </div>
-                        <p>Calculated automatically from the entered marks.</p>
-                    </div>
+<div class="marks-field">
+    <label for="marksSection">Section</label>
+    <select id="marksSection" name="section" required>
+        <option value="">Select section</option>
+        <option value="A">Section A</option>
+        <option value="B">Section B</option>
+        <option value="C">Section C</option>
+        <option value="D">Section D</option>
+        <option value="E">Section E</option>
+    </select>
+</div>
 
-                    <div class="marks-form-footer">
-                        <p id="marksEntryMessage" role="status" aria-live="polite"></p>
-                        <button type="submit" class="marks-submit-btn">
-                            Submit Marks
-                        </button>
-                    </div>
+        <div class="marks-field">
+            <label for="marksExamType">Examination Type</label>
+            <select id="marksExamType" name="exam_type" required>
+                <option value="">Select examination</option>
+                <option value="First Internal">First Internal</option>
+                <option value="Second Internal">Second Internal</option>
+                <option value="Third Internal">Third Internal</option>
+                <option value="Semester Examination">Semester Examination</option>
+                <option value="Practical Examination">Practical Examination</option>
+                <option value="Assignment">Assignment</option>
+            </select>
+        </div>
 
-                </form>
+        <div class="marks-field">
+            <label for="marksMaximum">Maximum Marks</label>
+            <input
+                type="number"
+                id="marksMaximum"
+                name="maximum_marks"
+                placeholder="e.g. 100"
+                min="0.01"
+                step="0.01"
+                value="100"
+                required
+            >
+        </div>
+    </div>
+
+    <div class="marks-register-header">
+        <div>
+            <h3>Class Marks Register</h3>
+            <p>Enter marks for each student in the selected class.</p>
+        </div>
+        <span id="marksStudentCount">0 students</span>
+    </div>
+
+    <div class="marks-register-wrapper">
+        <table class="marks-register-table">
+            <thead>
+                <tr>
+                    <th scope="col">S.No.</th>
+                    <th scope="col">Register Number</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Marks Obtained</th>
+                    <th scope="col">Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="marksStudentsBody">
+                <tr>
+                    <td colspan="5">Select a subject to load students.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="marks-form-footer">
+        <p id="marksEntryMessage" role="status" aria-live="polite"></p>
+        <button type="submit" class="marks-submit-btn">
+            Save Marks
+        </button>
+    </div>
+
+</form>
+
             </div>
         </div>
     `;
@@ -936,7 +956,80 @@ function renderTemplate(
     /* =====================================================
        ADMIN DASHBOARD
        ===================================================== */
+    
+    if (viewId === "faculty-timetable") {
+        return `
+            <div class="section-title">
+                <h3>My Timetable</h3>
+            </div>
 
+            <div class="dashboard-table-wrapper"
+                 id="facultyTimetableContainer">
+                <p>Loading your timetable...</p>
+            </div>
+        `;
+    }
+
+    if (viewId === "faculty-department-timetables") {
+        return `
+            <div class="section-title">
+                <h3>Department Timetables</h3>
+            </div>
+
+            <div class="marks-form-grid">
+                <div class="marks-field">
+                    <label for="departmentTimetableYear">
+                        Academic Year
+                    </label>
+                    <select id="departmentTimetableYear">
+                        <option value="">Select year</option>
+                        <option value="1">Year 1</option>
+                        <option value="2">Year 2</option>
+                        <option value="3">Year 3</option>
+                        <option value="4">Year 4</option>
+                    </select>
+                </div>
+
+                <div class="marks-field">
+                    <label for="departmentTimetableSemester">
+                        Semester
+                    </label>
+                    <select id="departmentTimetableSemester">
+                        <option value="">Select semester</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
+                <div class="marks-field">
+                    <label for="departmentTimetableSection">
+                        Section
+                    </label>
+                    <select id="departmentTimetableSection">
+                        <option value="">Select section</option>
+                        <option value="A">Section A</option>
+                        <option value="B">Section B</option>
+                        <option value="C">Section C</option>
+                        <option value="D">Section D</option>
+                        <option value="E">Section E</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="dashboard-table-wrapper"
+                 id="departmentTimetableContainer">
+                <p>Select a year, semester and section to view the timetable.</p>
+            </div>
+        `;
+    }
+
+    
     if (viewId === "admin-dashboard") {
 
         return `
@@ -1522,6 +1615,145 @@ async function loadFacultySubjects() {
             subjectSelect.appendChild(option);
         });
 
+
+
+async function loadFacultyMarksStudents() {
+    const subjectSelect = document.getElementById("marksSubject");
+    const tbody = document.getElementById("marksStudentsBody");
+    const count = document.getElementById("marksStudentCount");
+
+    if (!subjectSelect || !tbody) return;
+
+    const subjectId = subjectSelect.value;
+    const academicYear = document.getElementById("marksAcademicYear")?.value;
+const section = document.getElementById("marksSection")?.value;
+    tbody.replaceChildren();
+
+     if (!subjectId || !academicYear || !section) {
+    const row = tbody.insertRow();
+    const cell = row.insertCell();
+    cell.colSpan = 5;
+    cell.textContent =
+        "Select a subject, academic year and section to load students.";
+
+    if (count) count.textContent = "0 students";
+    return;
+}
+
+    const loadingRow = tbody.insertRow();
+    const loadingCell = loadingRow.insertCell();
+    loadingCell.colSpan = 5;
+    loadingCell.textContent = "Loading students...";
+
+    try {
+        const params = new URLSearchParams({
+    subject_id: subjectId,
+    academic_year: academicYear,
+    section: section
+});
+
+const response = await fetch(`/api/faculty/marks/students?${params}`);
+
+        const students = await response.json();
+
+        if (!response.ok) {
+            throw new Error(students.error || "Unable to load students.");
+        }
+
+        tbody.replaceChildren();
+
+        if (count) {
+            count.textContent =
+                `${students.length} student${students.length === 1 ? "" : "s"}`;
+        }
+
+        if (students.length === 0) {
+            const row = tbody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 5;
+            cell.textContent = "No students found for this subject.";
+            return;
+        }
+
+        students.forEach((student, index) => {
+            const row = tbody.insertRow();
+
+            row.insertCell().textContent = index + 1;
+            row.insertCell().textContent = student.register_no;
+            row.insertCell().textContent = student.student_name;
+
+            const marksCell = row.insertCell();
+            const input = document.createElement("input");
+
+            input.type = "number";
+            input.min = "0";
+            input.step = "0.01";
+            input.required = true;
+            input.placeholder = "Enter marks";
+            input.className = "marks-student-input";
+            input.dataset.studentId = student.student_id;
+
+            marksCell.appendChild(input);
+
+            const percentageCell = row.insertCell();
+            percentageCell.textContent = "—";
+
+            input.addEventListener("input", () => {
+                const maximum = Number(
+                    document.getElementById("marksMaximum")?.value
+                );
+                const obtained = Number(input.value);
+
+                if (
+                    input.value === "" ||
+                    maximum <= 0 ||
+                    obtained < 0 ||
+                    obtained > maximum
+                ) {
+                    percentageCell.textContent = "—";
+                    input.setCustomValidity(
+                        obtained > maximum && maximum > 0
+                            ? "Marks cannot exceed maximum marks."
+                            : ""
+                    );
+                    return;
+                }
+
+                input.setCustomValidity("");
+                percentageCell.textContent =
+                    `${(obtained / maximum * 100).toFixed(1)}%`;
+            });
+        });
+    } catch (error) {
+        console.error("Student loading error:", error);
+
+        tbody.replaceChildren();
+        const row = tbody.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 5;
+        cell.textContent = "Unable to load students. Please try again.";
+
+        if (count) count.textContent = "0 students";
+    }
+}
+
+document.addEventListener("change", function (event) {
+    if (
+        event.target.id === "marksSubject" ||
+        event.target.id === "marksAcademicYear" ||
+        event.target.id === "marksSection"
+    ) {
+        loadFacultyMarksStudents();
+    }
+});document.addEventListener("change", function (event) {
+    if (
+        event.target.id === "marksSubject" ||
+        event.target.id === "marksAcademicYear" ||
+        event.target.id === "marksSection"
+    ) {
+        loadFacultyMarksStudents();
+    }
+});
     } catch (error) {
         console.error("Faculty subjects error:", error);
         subjectSelect.innerHTML = '<option value="">Failed to load subjects</option>';

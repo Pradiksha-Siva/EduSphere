@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from routes.auth import auth
 from flask import Flask, render_template, session, jsonify
 from extensions import db
-
+from flask import Flask, render_template, session, jsonify, request
 from models import (
     Department,
     Staff,
@@ -181,6 +181,50 @@ def get_timetable():
         })
 
     return jsonify(timetable_data)
+
+@app.route("/api/faculty/timetable")
+def get_faculty_timetable():
+
+    if "user_role" not in session:
+        return jsonify({"error": "Please login first"}), 401
+
+    if session.get("user_role") != "faculty":
+        return jsonify({
+            "error": "Faculty login required"
+        }), 403
+
+    staff_id = session.get("user_id")
+
+    timetable_entries = (
+        Timetable.query
+        .filter_by(staff_id=staff_id)
+        .order_by(
+            Timetable.day_of_week,
+            Timetable.period_number
+        )
+        .all()
+    )
+
+    timetable_data = []
+
+    for entry in timetable_entries:
+        timetable_data.append({
+            "day_of_week": entry.day_of_week,
+            "period_number": entry.period_number,
+            "start_time": entry.start_time.strftime("%H:%M"),
+            "end_time": entry.end_time.strftime("%H:%M"),
+            "subject_name": (
+                entry.subject.subject_name
+                if entry.subject else None
+            ),
+            "academic_year": entry.academic_year,
+            "semester": entry.semester,
+            "section": entry.section,
+            "room_number": entry.room_number
+        })
+
+    return jsonify(timetable_data)
+
 @app.route("/api/faculty/subjects")
 def get_faculty_subjects():
 
@@ -205,6 +249,72 @@ def get_faculty_subjects():
         }
         for subject in subjects
     ])
+
+
+
+@app.route("/api/faculty/marks/students")
+def get_faculty_marks_students():
+    if session.get("user_role") != "faculty":
+        return jsonify({"error": "Faculty login required"}), 403
+
+    staff_id = session.get("user_id")
+    subject_id = request.args.get("subject_id", type=int)
+    academic_year = request.args.get("academic_year", type=int)
+    section = request.args.get("section", type=str)
+
+    if not subject_id or not academic_year or not section:
+        return jsonify({
+            "error": "Subject, year and section are required."
+        }), 400
+
+    if academic_year not in (1, 2, 3, 4):
+        return jsonify({"error": "Invalid year."}), 400
+
+    section = section.strip().upper()
+
+    if section not in ("A", "B", "C"):
+        return jsonify({"error": "Invalid section."}), 400
+
+    subject = Subject.query.filter_by(
+        subject_id=subject_id,
+        staff_id=staff_id
+    ).first()
+
+    if not subject:
+        return jsonify({"error": "Subject not assigned to you."}), 403
+
+    timetable_rows = Timetable.query.filter_by(
+        subject_id=subject_id,
+        staff_id=staff_id,
+        department_id=subject.department_id,
+        academic_year=academic_year,
+        semester=4,
+        section=section
+    ).all()
+
+    students = []
+    seen_ids = set()
+
+    for timetable_row in timetable_rows:
+        class_students = Student.query.filter_by(
+            year=timetable_row.academic_year,
+            semester=timetable_row.semester,
+            section=timetable_row.section,
+            department_id=timetable_row.department_id
+        ).order_by(Student.register_no.asc()).all()
+
+        for student in class_students:
+            if student.student_id not in seen_ids:
+                seen_ids.add(student.student_id)
+                students.append({
+                    "student_id": student.student_id,
+                    "register_no": student.register_no,
+                    "student_name": (
+                        f"{student.first_name} {student.last_name or ''}"
+                    ).strip()
+                })
+
+    return jsonify(students)
 
 
 

@@ -1625,3 +1625,439 @@ body:has(.login-container) {
         width: 100%;
     }
 }
+
+/* =========================================================
+   EDUSPHERE — FACULTY MARKS REGISTER UPGRADE
+   Scoped to the faculty marks page only
+   ========================================================= */
+
+.marks-page {
+    --marks-ink: #202b45;
+    --marks-muted: #68758b;
+    --marks-border: #e5eaf2;
+    --marks-primary: #356ae6;
+    --marks-surface: #ffffff;
+    --marks-background: #f7f9fc;
+
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 8px 0 32px;
+    color: var(--marks-ink);
+}
+
+/* Page heading */
+
+.marks-page .marks-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.marks-page .marks-eyebrow {
+    margin: 0 0 9px;
+    color: var(--marks-primary);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 1.6px;
+}
+
+.marks-page .marks-page-header h2 {
+    margin: 0;
+    color: var(--marks-ink);
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 750;
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+.marks-page .marks-subtitle {
+    margin: 10px 0 0;
+    color: var(--marks-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.marks-page .marks-header-icon {
+    display: grid;
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+    place-items: center;
+    border: 1px solid #dbe6ff;
+    border-radius: 16px;
+    background: #edf3ff;
+    color: var(--marks-primary);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* Summary panels */
+
+.marks-page .marks-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.marks-page .marks-info-card {
+    padding: 22px 24px;
+    border: 1px solid var(--marks-border);
+    border-radius: 15px;
+    background: var(--marks-surface);
+    box-shadow: 0 3px 12px rgb(32 43 69 / 3%);
+}
+
+.marks-page .marks-info-label {
+    color: var(--marks-muted);
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 1.3px;
+}
+
+.marks-page .marks-info-card h3 {
+    margin: 12px 0 7px;
+    color: var(--marks-ink);
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.marks-page .marks-info-card p {
+    margin: 0;
+    color: var(--marks-muted);
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* Main assessment panel */
+
+.marks-page .marks-form-card {
+    overflow: hidden;
+    border: 1px solid var(--marks-border);
+    border-radius: 17px;
+    background: var(--marks-surface);
+    box-shadow: 0 5px 24px rgb(32 43 69 / 4%);
+}
+
+.marks-page .marks-card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 26px;
+    border-bottom: 1px solid var(--marks-border);
+    background: #fcfdff;
+}
+
+.marks-page .marks-card-heading h3 {
+    margin: 0;
+    color: var(--marks-ink);
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.marks-page .marks-card-heading p {
+    margin: 7px 0 0;
+    color: var(--marks-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.marks-page .marks-step-label {
+    flex-shrink: 0;
+    padding: 7px 11px;
+    border: 1px solid #dbe6ff;
+    border-radius: 7px;
+    background: #edf3ff;
+    color: #2857c5;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 0.5px;
+}
+
+/* Form layout */
+
+.marks-page #marksEntryForm {
+    padding: 26px;
+}
+
+.marks-page .marks-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: end;
+}
+
+.marks-page .marks-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.marks-page .marks-field label {
+    color: #35425a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.marks-page .marks-field select,
+.marks-page .marks-field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    padding: 0 13px;
+    border: 1px solid #dce3ed;
+    border-radius: 9px;
+    outline: none;
+    background: #fff;
+    color: var(--marks-ink);
+    font: inherit;
+    font-size: 13px;
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background 160ms ease;
+}
+
+.marks-page .marks-field select:focus,
+.marks-page .marks-field input:focus,
+.marks-page .marks-student-input:focus {
+    border-color: var(--marks-primary);
+    box-shadow: 0 0 0 3px rgb(53 106 230 / 12%);
+}
+
+.marks-page .marks-field input::placeholder {
+    color: #9aa5b5;
+}
+
+/* Register heading */
+
+.marks-page .marks-register-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 34px;
+    margin-bottom: 17px;
+}
+
+.marks-page .marks-register-header h3 {
+    margin: 0;
+    color: var(--marks-ink);
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.marks-page .marks-register-header p {
+    margin: 6px 0 0;
+    color: var(--marks-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.marks-page #marksStudentCount {
+    flex-shrink: 0;
+    padding: 7px 11px;
+    border: 1px solid #dce7ff;
+    border-radius: 8px;
+    background: #f1f5ff;
+    color: #315ec3;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+/* Student table */
+
+.marks-page .marks-register-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--marks-border);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.marks-page .marks-register-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.marks-page .marks-register-table thead th {
+    padding: 15px 17px;
+    border-bottom: 1px solid #e0e7f0;
+    background: #f6f8fc;
+    color: #66748a;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.marks-page .marks-register-table tbody td {
+    padding: 15px 17px;
+    border-bottom: 1px solid #edf0f5;
+    color: #39465c;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.marks-page .marks-register-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.marks-page .marks-register-table tbody tr {
+    transition: background 140ms ease;
+}
+
+.marks-page .marks-register-table tbody tr:hover {
+    background: #f8faff;
+}
+
+.marks-page .marks-register-table tbody td:nth-child(1) {
+    width: 60px;
+    color: #8792a4;
+    font-size: 12px;
+}
+
+.marks-page .marks-register-table tbody td:nth-child(2) {
+    color: #315ec3;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.marks-page .marks-register-table tbody td:nth-child(3) {
+    color: var(--marks-ink);
+    font-weight: 650;
+}
+
+.marks-page .marks-student-input {
+    width: 115px;
+    min-height: 38px;
+    padding: 0 11px;
+    border: 1px solid #dce3ed;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--marks-ink);
+    font: inherit;
+    font-size: 13px;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.marks-page .marks-student-percentage {
+    color: #53647d;
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Footer and action */
+
+.marks-page .marks-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--marks-border);
+}
+
+.marks-page #marksEntryMessage {
+    margin: 0;
+    color: var(--marks-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.marks-page .marks-submit-btn {
+    min-height: 43px;
+    padding: 0 21px;
+    border: 1px solid var(--marks-primary);
+    border-radius: 9px;
+    background: var(--marks-primary);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background 160ms ease, box-shadow 160ms ease;
+}
+
+.marks-page .marks-submit-btn:hover {
+    background: #2858cb;
+    box-shadow: 0 4px 12px rgb(53 106 230 / 20%);
+}
+
+.marks-page .marks-submit-btn:focus-visible {
+    outline: 3px solid rgb(53 106 230 / 28%);
+    outline-offset: 3px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 900px) {
+    .marks-page .marks-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .marks-page .marks-page-header {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .marks-page .marks-header-icon {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+        border-radius: 12px;
+    }
+
+    .marks-page .marks-info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .marks-page .marks-info-card {
+        padding: 18px;
+    }
+
+    .marks-page .marks-card-heading {
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .marks-page .marks-step-label {
+        display: none;
+    }
+
+    .marks-page #marksEntryForm {
+        padding: 18px;
+    }
+
+    .marks-page .marks-form-grid {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .marks-page .marks-register-header {
+        align-items: flex-start;
+        margin-top: 26px;
+    }
+
+    .marks-page .marks-form-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .marks-page .marks-submit-btn {
+        width: 100%;
+    }
+}
