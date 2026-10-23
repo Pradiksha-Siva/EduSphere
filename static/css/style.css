@@ -459,7 +459,8 @@ tr:last-child td {
 
 
 .btn:hover {
-  background: var(--ink-soft);
+    background: #E8EDF5;
+    color: var(--ink);
 }
 
 

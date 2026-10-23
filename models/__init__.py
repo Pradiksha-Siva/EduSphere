@@ -11,3 +11,5 @@ from .notice import Notice
 from .complaint import Complaint
 from .leaveapplication import LeaveApplication
 from .timetable import Timetable
+from .document import Document
+from .submission import Submission

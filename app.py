@@ -1,3 +1,9 @@
+import os
+import uuid
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+from dotenv import load_dotenv
+load_dotenv()
 from config import Config
 from flask import Flask, render_template
 from routes.auth import auth
@@ -17,7 +23,9 @@ from models import (
     Notice,
     Complaint,
     LeaveApplication,
-    Timetable
+    Timetable,
+    Document,
+    Submission
 )
 
 app = Flask(__name__)
@@ -225,6 +233,61 @@ def get_faculty_timetable():
 
     return jsonify(timetable_data)
 
+
+@app.route("/api/faculty/department-timetables")
+def get_department_timetables():
+
+    if "user_role" not in session:
+        return jsonify({"error": "Please login first"}), 401
+
+    if session.get("user_role") != "faculty":
+        return jsonify({
+            "error": "Faculty login required"
+        }), 403
+
+    staff_id = session.get("user_id")
+    staff = Staff.query.get(staff_id)
+
+    if not staff:
+        return jsonify({"error": "Faculty not found"}), 404
+
+    timetable_entries = (
+        Timetable.query
+        .filter_by(department_id=staff.department_id)
+        .order_by(
+            Timetable.academic_year,
+            Timetable.semester,
+            Timetable.section,
+            Timetable.day_of_week,
+            Timetable.period_number
+        )
+        .all()
+    )
+
+    timetable_data = []
+
+    for entry in timetable_entries:
+        timetable_data.append({
+            "day_of_week": entry.day_of_week,
+            "period_number": entry.period_number,
+            "start_time": entry.start_time.strftime("%H:%M"),
+            "end_time": entry.end_time.strftime("%H:%M"),
+            "subject_name": (
+                entry.subject.subject_name
+                if entry.subject else None
+            ),
+            "staff_name": (
+                entry.staff.staff_name
+                if entry.staff else None
+            ),
+            "academic_year": entry.academic_year,
+            "semester": entry.semester,
+            "section": entry.section,
+            "room_number": entry.room_number
+        })
+
+    return jsonify(timetable_data)
+
 @app.route("/api/faculty/subjects")
 def get_faculty_subjects():
 
@@ -249,6 +312,67 @@ def get_faculty_subjects():
         }
         for subject in subjects
     ])
+
+@app.route("/api/faculty/submission-filters", methods=["GET"])
+def get_faculty_submission_filters():
+    if session.get("user_role") != "faculty":
+        return jsonify({"error": "Faculty login required"}), 403
+
+    staff_id = session.get("user_id")
+
+    staff = Staff.query.filter_by(staff_id=staff_id).first()
+
+    if staff is None:
+        return jsonify({"error": "Faculty not found"}), 404
+
+    subjects = (
+        Subject.query
+        .filter_by(staff_id=staff_id)
+        .order_by(Subject.subject_name.asc())
+        .all()
+    )
+
+    years = [
+        row[0]
+        for row in db.session.query(Student.year)
+        .filter(
+            Student.department_id == staff.department_id,
+            Student.year.isnot(None)
+        )
+        .distinct()
+        .order_by(Student.year.asc())
+        .all()
+    ]
+
+    sections = [
+        row[0]
+        for row in db.session.query(Student.section)
+        .filter(
+            Student.department_id == staff.department_id,
+            Student.section.isnot(None)
+        )
+        .distinct()
+        .order_by(Student.section.asc())
+        .all()
+    ]
+
+    return jsonify({
+        "department_id": staff.department_id,
+        "department_name": (
+            staff.department.department_name
+            if staff.department else ""
+        ),
+        "years": years,
+        "sections": sections,
+        "subjects": [
+            {
+                "subject_id": subject.subject_id,
+                "subject_name": subject.subject_name,
+                "semester": subject.semester
+            }
+            for subject in subjects
+        ]
+    }), 200
 
 
 
@@ -469,8 +593,365 @@ def get_leave_applications():
         }
         for item in applications
     ])
+@app.route("/api/documents", methods=["POST"])
+def upload_document():
+    if session.get("user_role") != "student":
+        return jsonify({"error": "Student login required"}), 403
+
+    document_name = request.form.get("document_name", "").strip()
+    document_type = request.form.get("document_type", "").strip()
+    file = request.files.get("document_file")
+
+    if not document_name or not document_type or not file:
+        return jsonify({"error": "All fields are required."}), 400
+
+    allowed_extensions = {"pdf", "jpg", "jpeg", "png"}
+    extension = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
+
+    if extension not in allowed_extensions:
+        return jsonify({"error": "Only PDF, JPG and PNG files are allowed."}), 400
+
+    upload_folder = os.path.join(app.instance_path, "student_documents")
+    os.makedirs(upload_folder, exist_ok=True)
+
+    original_filename = secure_filename(file.filename)
+
+    if not original_filename:
+        return jsonify({"error": "Invalid filename."}), 400
+
+    stored_filename = f"{uuid.uuid4().hex}.{extension}"
+    file_path = os.path.join(upload_folder, stored_filename)
+
+    try:
+        file.save(file_path)
+
+        document = Document(
+            student_id=session["user_id"],
+            document_name=document_name,
+            document_type=document_type,
+            original_filename=original_filename,
+            stored_filename=stored_filename,
+            status="Pending"
+        )
+
+        db.session.add(document)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Document uploaded successfully.",
+            "document_id": document.document_id
+        }), 201
+
+    except Exception:
+        db.session.rollback()
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+        app.logger.exception("Document upload failed")
+        return jsonify({"error": "Upload failed. Please try again."}), 500
+
+@app.route("/api/documents", methods=["GET"])
+def get_student_documents():
+    if session.get("user_role") != "student":
+        return jsonify({"error": "Student login required"}), 403
+
+    documents = Document.query.filter_by(
+        student_id=session["user_id"]
+    ).order_by(Document.uploaded_at.desc()).all()
+
+    return jsonify([
+        {
+            "document_id": doc.document_id,
+            "document_name": doc.document_name,
+            "document_type": doc.document_type,
+            "original_filename": doc.original_filename,
+            "status": doc.status,
+            "uploaded_at": doc.uploaded_at.strftime("%d %b %Y, %I:%M %p")
+        }
+        for doc in documents
+    ]), 200
 
 
+@app.route("/api/documents/<int:document_id>/download", methods=["GET"])
+def download_student_document(document_id):
+    if session.get("user_role") != "student":
+        return jsonify({"error": "Student login required"}), 403
+
+    document = Document.query.filter_by(
+        document_id=document_id,
+        student_id=session["user_id"]
+    ).first()
+
+    if document is None:
+        return jsonify({"error": "Document not found"}), 404
+
+    upload_folder = os.path.join(
+        app.instance_path,
+        "student_documents"
+    )
+
+    return send_from_directory(
+        upload_folder,
+        document.stored_filename,
+        as_attachment=True,
+        download_name=document.original_filename
+    )
+
+@app.route("/api/assignment-submissions/<int:submission_id>/download", methods=["GET"])
+def download_assignment_submission(submission_id):
+    role = session.get("user_role")
+    user_id = session.get("user_id")
+
+    if role not in ["student", "faculty"]:
+        return jsonify({"error": "Login required"}), 403
+
+    submission = Submission.query.filter_by(
+        submission_id=submission_id
+    ).first()
+
+    if submission is None:
+        return jsonify({"error": "Submission not found"}), 404
+
+    # Students can download only their own submissions
+    if role == "student":
+        if submission.student_id != user_id:
+            return jsonify({"error": "Access denied"}), 403
+
+    # Faculty can download submissions only for their assigned subjects
+    elif role == "faculty":
+        assignment = Assignment.query.filter_by(
+            assignment_id=submission.assignment_id
+        ).join(Subject).filter(
+            Subject.staff_id == user_id
+        ).first()
+
+        if assignment is None:
+            return jsonify({"error": "Access denied"}), 403
+
+    upload_folder = os.path.join(
+        app.instance_path,
+        "assignment_submissions"
+    )
+
+    return send_from_directory(
+        upload_folder,
+        submission.stored_filename,
+        as_attachment=True,
+        download_name=submission.original_filename
+    )
+
+
+
+@app.route("/api/assignment-submissions", methods=["POST"])
+def submit_assignment():
+    if session.get("user_role") != "student":
+        return jsonify({"error": "Student login required"}), 403
+
+    student_id = session.get("user_id")
+    assignment_id = request.form.get("assignment_id", type=int)
+    file = request.files.get("submission_file")
+
+    if not student_id:
+        return jsonify({"error": "Student session not found"}), 401
+
+    if not assignment_id or not file or not file.filename:
+        return jsonify({
+            "error": "Assignment and submission file are required."
+        }), 400
+
+    assignment = (
+        Assignment.query
+        .join(Subject)
+        .join(Student, Student.department_id == Subject.department_id)
+        .filter(
+            Assignment.assignment_id == assignment_id,
+            Student.student_id == student_id
+        )
+        .first()
+    )
+
+    if not assignment:
+        return jsonify({"error": "Assignment not found"}), 404
+
+    allowed_extensions = {"pdf", "doc", "docx", "ppt", "pptx"}
+    original_filename = secure_filename(file.filename)
+
+    if (
+        not original_filename
+        or "." not in original_filename
+        or original_filename.rsplit(".", 1)[-1].lower()
+        not in allowed_extensions
+    ):
+        return jsonify({
+            "error": "Upload a PDF, DOC, DOCX, PPT or PPTX file."
+        }), 400
+
+    extension = original_filename.rsplit(".", 1)[-1].lower()
+    stored_filename = f"{uuid.uuid4().hex}.{extension}"
+
+    upload_folder = os.path.join(
+        app.instance_path, "assignment_submissions"
+    )
+    os.makedirs(upload_folder, exist_ok=True)
+
+    file_path = os.path.join(upload_folder, stored_filename)
+
+    try:
+        file.save(file_path)
+
+        submission = Submission(
+            assignment_id=assignment_id,
+            student_id=student_id,
+            original_filename=original_filename,
+            stored_filename=stored_filename,
+            status="Submitted"
+        )
+
+        db.session.add(submission)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Assignment submitted successfully.",
+            "submission_id": submission.submission_id
+        }), 201
+
+    except Exception:
+        db.session.rollback()
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+        app.logger.exception("Assignment submission failed")
+        return jsonify({
+            "error": "Submission failed. Please try again."
+        }), 500
+
+@app.route("/api/assignment-submissions", methods=["GET"])
+def get_assignment_submissions():
+    if session.get("user_role") != "student":
+        return jsonify({"error": "Student login required"}), 403
+
+    student_id = session.get("user_id")
+
+    submissions = (
+        Submission.query
+        .filter_by(student_id=student_id)
+        .order_by(Submission.submitted_at.desc())
+        .all()
+    )
+
+    return jsonify([
+        {
+            "submission_id": item.submission_id,
+            "assignment_id": item.assignment_id,
+            "assignment_title": item.assignment.title,
+            "original_filename": item.original_filename,
+            "submitted_at": (
+                item.submitted_at.strftime("%d %b %Y, %I:%M %p")
+                if item.submitted_at else ""
+            ),
+            "status": item.status
+        }
+        for item in submissions
+    ]), 200
+
+@app.route("/api/faculty/assignment-submissions", methods=["GET"])
+def get_faculty_assignment_submissions():
+    if session.get("user_role") != "faculty":
+        return jsonify({"error": "Faculty login required"}), 403
+
+    staff_id = session.get("user_id")
+
+    staff = Staff.query.filter_by(staff_id=staff_id).first()
+    if staff is None:
+        return jsonify({"error": "Faculty not found"}), 404
+
+    query = (
+        Submission.query
+        .join(Assignment, Submission.assignment_id == Assignment.assignment_id)
+        .join(Subject, Assignment.subject_id == Subject.subject_id)
+        .join(Student, Submission.student_id == Student.student_id)
+        .filter(
+            Subject.staff_id == staff_id,
+            Subject.department_id == staff.department_id,
+            Student.department_id == staff.department_id
+        )
+    )
+
+    year = request.args.get("year", type=int)
+    section = request.args.get("section")
+    subject_id = request.args.get("subject_id", type=int)
+    assignment_id = request.args.get("assignment_id", type=int)
+
+    if year is not None:
+        query = query.filter(Student.year == year)
+
+    if section:
+        query = query.filter(Student.section == section)
+
+    if subject_id is not None:
+        query = query.filter(Subject.subject_id == subject_id)
+
+    if assignment_id is not None:
+        query = query.filter(Assignment.assignment_id == assignment_id)
+
+    submissions = query.order_by(Submission.submitted_at.desc()).all()
+
+    return jsonify([
+        {
+            "submission_id": item.submission_id,
+            "assignment_id": item.assignment_id,
+            "assignment_title": item.assignment.title,
+            "subject_name": item.assignment.subject.subject_name,
+            "student_id": item.student_id,
+            "student_name": (
+                f"{item.student.first_name} {item.student.last_name or ''}".strip()
+            ),
+            "register_no": item.student.register_no,
+            "original_filename": item.original_filename,
+            "submitted_at": (
+                item.submitted_at.strftime("%d %b %Y, %I:%M %p")
+                if item.submitted_at else ""
+            ),
+            "status": item.status
+        }
+        for item in submissions
+    ]), 200
+
+@app.route(
+    "/api/faculty/subject-assignments/<int:subject_id>",
+    methods=["GET"]
+)
+def get_faculty_subject_assignments(subject_id):
+    if session.get("user_role") != "faculty":
+        return jsonify({"error": "Faculty login required"}), 403
+
+    staff_id = session.get("user_id")
+
+    subject = Subject.query.filter_by(
+        subject_id=subject_id,
+        staff_id=staff_id
+    ).first()
+
+    if subject is None:
+        return jsonify({"error": "Subject not found or access denied"}), 404
+
+    assignments = Assignment.query.filter_by(
+        subject_id=subject_id,
+        staff_id=staff_id
+    ).order_by(Assignment.title.asc()).all()
+
+    return jsonify([
+        {
+            "assignment_id": item.assignment_id,
+            "title": item.title
+        }
+        for item in assignments
+    ]), 200
+
+with app.app_context():
+    db.create_all()
 
 
 
