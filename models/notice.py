@@ -26,6 +26,28 @@ class Notice(db.Model):
         db.Enum("Students", "Staff", "All")
     )
 
+    # Targeting fields
+    department_id = db.Column(
+        db.Integer,
+        db.ForeignKey("department.department_id"),
+        nullable=True
+    )
+
+    academic_year = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
+    semester = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
+    section = db.Column(
+        db.String(10),
+        nullable=True
+    )
+
     attachment = db.Column(
         db.String(255)
     )

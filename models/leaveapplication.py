@@ -8,6 +8,11 @@ class LeaveApplication(db.Model):
         db.Integer,
         primary_key=True
     )
+    application_type = db.Column(
+    db.Enum("Leave", "OD", "Other", name="leave_application_type"),
+    nullable=False,
+    default="Leave"
+)
 
     student_id = db.Column(
         db.Integer,

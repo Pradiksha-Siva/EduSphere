@@ -2062,3 +2062,2067 @@ body:has(.login-container) {
         width: 100%;
     }
 }
+
+/* ================================
+   STUDENT VOICE
+================================ */
+
+.student-voice-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 24px auto;
+    padding: 0 24px 32px;
+    box-sizing: border-box;
+    color: #1e293b;
+}
+
+.student-voice-container * {
+    box-sizing: border-box;
+}
+
+.student-voice-container .section-title {
+    margin-bottom: 24px;
+}
+
+.student-voice-container .section-title h3 {
+    margin-bottom: 8px;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.student-voice-container .section-title p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* Tabs */
+
+.student-voice-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 6px;
+    background: #e2e8f0;
+    border-radius: 12px;
+}
+
+.student-voice-tabs .voice-tab {
+    flex: 1;
+    min-width: 150px;
+    padding: 13px 16px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.student-voice-tabs .voice-tab:hover {
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+.student-voice-tabs .voice-tab.active {
+    background: #a8792b;
+    color: #ffffff;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.12);
+}
+
+/* Form and history cards */
+
+.student-voice-container .voice-panel {
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.student-voice-container .voice-panel[hidden] {
+    display: none !important;
+}
+
+.student-voice-container .voice-panel h4 {
+    margin: 0 0 22px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Form layout */
+
+.student-voice-container .voice-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    width: 100%;
+}
+
+.student-voice-container .voice-panel form > label:not(.voice-anonymous-option) {
+    margin-top: 12px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.student-voice-container .voice-panel input:not([type="checkbox"]),
+.student-voice-container .voice-panel select,
+.student-voice-container .voice-panel textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1e293b;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.student-voice-container .voice-panel textarea {
+    min-height: 130px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.student-voice-container .voice-panel input:focus,
+.student-voice-container .voice-panel select:focus,
+.student-voice-container .voice-panel textarea:focus {
+    border-color: #a8792b;
+    box-shadow: 0 0 0 3px rgba(168, 121, 43, 0.14);
+}
+
+.student-voice-container .voice-panel input::placeholder,
+.student-voice-container .voice-panel textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Anonymous option */
+
+.student-voice-container .voice-anonymous-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0 10px;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.student-voice-container .voice-anonymous-option input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: #a8792b;
+    cursor: pointer;
+}
+
+/* Submit buttons */
+
+.student-voice-container .primary-btn {
+    align-self: flex-start;
+    margin-top: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #a8792b;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.student-voice-container .primary-btn:hover {
+    background: #8d6422;
+    transform: translateY(-1px);
+}
+
+.student-voice-container .primary-btn:focus-visible,
+.student-voice-tabs .voice-tab:focus-visible {
+    outline: 3px solid rgba(168, 121, 43, 0.35);
+    outline-offset: 3px;
+}
+
+/* Status message */
+
+#student-voice-message {
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+    .student-voice-container {
+        padding: 0 12px 24px;
+    }
+
+    .student-voice-container .voice-panel {
+        padding: 18px;
+    }
+
+    .student-voice-tabs {
+        flex-direction: column;
+    }
+
+    .student-voice-tabs .voice-tab {
+        width: 100%;
+    }
+
+    .student-voice-container .primary-btn {
+        width: 100%;
+    }
+}
+
+/* Leave Application — EduSphere */
+
+.leave-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px 0 32px;
+    color: var(--text-color, #172033);
+}
+
+.leave-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.leave-page-header h2 {
+    margin: 0 0 7px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+}
+
+.leave-page-header p,
+.leave-card-heading p {
+    margin: 0;
+    color: var(--muted-color, #697586);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.leave-header-tag {
+    padding: 8px 12px;
+    border: 1px solid #dbe3ef;
+    border-radius: 6px;
+    background: #f7f9fc;
+    color: #405577;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.leave-info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 17px 20px;
+    margin-bottom: 22px;
+    border: 1px solid #d9e5f5;
+    border-radius: 10px;
+    background: #f5f8fd;
+}
+
+.leave-info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #9db8e4;
+    border-radius: 50%;
+    color: #315d9c;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.leave-info-banner h4 {
+    margin: 1px 0 5px;
+    color: #25446f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.leave-info-banner p {
+    margin: 0;
+    color: #526780;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.leave-form-card,
+.leave-history-card {
+    padding: 26px;
+    margin-bottom: 22px;
+    border: 1px solid var(--border-color, #e4e8ef);
+    border-radius: 12px;
+    background: var(--card-bg, #ffffff);
+    box-shadow: 0 3px 12px rgba(22, 34, 51, 0.035);
+}
+
+.leave-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.leave-card-heading h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.25px;
+}
+
+.leave-required-note {
+    padding-top: 3px;
+    color: #7a8494;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.leave-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 24px;
+}
+
+.leave-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 9px;
+}
+
+.leave-full-width {
+    grid-column: 1 / -1;
+}
+
+.leave-field label {
+    color: var(--text-color, #263449);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.leave-field label span {
+    color: #c24141;
+}
+
+.leave-field input,
+.leave-field select,
+.leave-field textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+    border: 1px solid var(--border-color, #dce2eb);
+    border-radius: 7px;
+    outline: none;
+    background: var(--input-bg, #ffffff);
+    color: var(--text-color, #172033);
+    font: inherit;
+    font-size: 13px;
+    transition: border-color 0.18s ease,
+                box-shadow 0.18s ease;
+}
+
+.leave-field textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.leave-field input[type="file"] {
+    padding: 9px;
+}
+
+.leave-field input:focus,
+.leave-field select:focus,
+.leave-field textarea:focus {
+    border-color: #527cc5;
+    box-shadow: 0 0 0 3px rgba(82, 124, 197, 0.12);
+}
+
+.leave-field small {
+    color: var(--muted-color, #778294);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.leave-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 27px;
+    padding-top: 21px;
+    border-top: 1px solid var(--border-color, #edf0f5);
+}
+
+.leave-btn-primary,
+.leave-btn-secondary {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 43px;
+    padding: 0 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s ease,
+                border-color 0.18s ease;
+}
+
+.leave-btn-primary {
+    border: 1px solid #294f91;
+    background: #294f91;
+    color: #ffffff;
+}
+
+.leave-btn-primary:hover {
+    border-color: #1f3f76;
+    background: #1f3f76;
+}
+
+.leave-btn-secondary {
+    border: 1px solid var(--border-color, #dce2eb);
+    background: var(--card-bg, #ffffff);
+    color: var(--text-color, #344054);
+}
+
+.leave-btn-secondary:hover {
+    background: var(--input-bg, #f5f7fa);
+}
+
+.leave-message {
+    margin-top: 16px;
+    font-size: 13px;
+}
+
+.leave-history-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 34px 20px;
+    text-align: center;
+    border: 1px dashed var(--border-color, #dce2eb);
+    border-radius: 9px;
+    background: var(--input-bg, #fafbfd);
+}
+
+.leave-history-symbol {
+    margin-bottom: 12px;
+    font-size: 27px;
+}
+
+.leave-history-placeholder h4 {
+    margin: 0 0 7px;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.leave-history-placeholder p {
+    max-width: 390px;
+    margin: 0;
+    color: var(--muted-color, #778294);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+@media (max-width: 650px) {
+    .leave-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .leave-form-card,
+    .leave-history-card {
+        padding: 18px;
+    }
+
+    .leave-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 19px;
+    }
+
+    .leave-full-width {
+        grid-column: auto;
+    }
+
+    .leave-card-heading {
+        flex-direction: column;
+    }
+
+    .leave-form-actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+    .leave-btn-primary,
+    .leave-btn-secondary {
+        width: 100%;
+    }
+}
+
+.leave-history-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #e8edf3;
+}
+
+.leave-history-item:last-child {
+    border-bottom: none;
+}
+
+.leave-history-item-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.leave-history-item h4 {
+    margin: 0 0 7px;
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.leave-history-item-main p {
+    margin: 0;
+    color: #758195;
+    font-size: 13px;
+}
+
+.leave-status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.leave-status-pending {
+    background: #fff5df;
+    color: #91620a;
+}
+
+.leave-status-approved {
+    background: #e7f7ed;
+    color: #217447;
+}
+
+.leave-status-rejected {
+    background: #fdecec;
+    color: #b4232e;
+}
+
+.leave-history-reason {
+    margin-top: 16px;
+}
+
+.leave-history-reason > span {
+    color: #778294;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-history-reason p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.leave-history-submitted {
+    margin-top: 14px;
+    color: #778294;
+    font-size: 12px;
+}
+
+.leave-history-error {
+    padding: 16px;
+    border-radius: 8px;
+    background: #fff3f2;
+    color: #b4232e;
+    font-size: 13px;
+}
+
+.leave-history-loading {
+    color: #778294;
+    font-size: 13px;
+}
+.nav-submenu {
+    list-style: none;
+    padding-left: 14px;
+    margin: 4px 0 8px;
+}
+
+.nav-submenu[hidden] {
+    display: none;
+}
+
+.nav-submenu .nav-child {
+    padding-left: 24px;
+    font-size: 13px;
+}
+
+.nav-parent::after {
+    content: "▾";
+    float: right;
+    transition: transform 0.2s ease;
+}
+
+.nav-parent[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
+/* =========================================
+   STAFF LEAVE APPROVAL
+   ========================================= */
+
+.leave-approval-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.leave-approval-panel {
+    background: #ffffff;
+    border: 1px solid #e2e6ed;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.leave-approval-message {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+/* New applications summary card */
+.leave-summary-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 22px;
+    margin-bottom: 28px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-summary-label {
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 6px;
+}
+
+.leave-summary-count {
+    color: #172033;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Submission date groups */
+.leave-date-group {
+    margin-top: 28px;
+}
+
+.leave-date-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5eaf1;
+}
+
+.leave-date-title {
+    color: #172033;
+    font-size: 16px;
+    font-weight: 650;
+    margin: 0;
+}
+
+.leave-date-count {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Individual application cards */
+.leave-application-card {
+    padding: 20px;
+    margin-bottom: 14px;
+    background: #ffffff;
+    border: 1px solid #e2e6ed;
+    border-radius: 12px;
+    transition: border-color 0.18s ease,
+                box-shadow 0.18s ease;
+}
+
+.leave-application-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.leave-application-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.leave-student-name {
+    color: #172033;
+    font-size: 16px;
+    font-weight: 650;
+    margin: 0 0 5px;
+}
+
+.leave-register-number {
+    color: #64748b;
+    font-size: 13px;
+    margin: 0;
+}
+
+.leave-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.leave-status-pending {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.leave-status-approved {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.leave-status-rejected {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.leave-application-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+}
+
+.leave-detail-label {
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.leave-detail-value {
+    color: #273449;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.leave-application-reason {
+    grid-column: 1 / -1;
+}
+
+.leave-application-submitted {
+    grid-column: 1 / -1;
+    padding-top: 12px;
+    border-top: 1px solid #edf0f4;
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* Action buttons */
+.leave-application-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.leave-action-button {
+    min-height: 38px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s ease,
+                border-color 0.18s ease;
+}
+
+.leave-action-approve {
+    background: #a8792b;
+    color: #ffffff;
+}
+
+.leave-action-approve:hover {
+    background: #90651f;
+}
+
+.leave-action-reject {
+    background: #ffffff;
+    color: #b42318;
+    border-color: #f0c8c5;
+}
+
+.leave-action-reject:hover {
+    background: #fff5f4;
+    border-color: #e7aaa5;
+}
+
+.leave-action-button:focus-visible {
+    outline: 3px solid #cbd5e1;
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .leave-approval-panel {
+        padding: 16px;
+    }
+
+    .leave-summary-card {
+        padding: 16px;
+    }
+
+    .leave-application-card {
+        padding: 16px;
+    }
+
+    .leave-application-details {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .leave-application-reason,
+    .leave-application-submitted {
+        grid-column: auto;
+    }
+}
+
+/* Leave Approval — layout correction */
+
+.leave-approval-page {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.leave-approval-panel {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.leave-approval-message {
+    margin: 0 0 20px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.leave-summary-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 22px;
+    margin: 0 0 28px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-summary-label {
+    margin: 0 0 6px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.leave-summary-count {
+    margin: 0;
+    color: #172033;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.leave-date-group {
+    margin: 0 0 30px;
+}
+
+.leave-date-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.leave-date-title {
+    margin: 0;
+    color: #172033;
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.leave-date-count {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-application-card {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 22px;
+    margin: 0 0 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-application-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 0 0 20px;
+}
+
+.leave-student-name {
+    margin: 0 0 5px;
+    color: #172033;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.leave-register-number {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.leave-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.leave-status-pending {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.leave-status-approved {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.leave-status-rejected {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.leave-application-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 28px;
+}
+
+.leave-detail-label {
+    display: block;
+    margin: 0 0 6px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-detail-value {
+    color: #263449;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.leave-application-reason,
+.leave-application-submitted {
+    grid-column: 1 / -1;
+}
+
+.leave-application-submitted {
+    padding-top: 14px;
+    border-top: 1px solid #edf0f4;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.leave-application-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.leave-action-button {
+    min-height: 40px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.leave-action-approve {
+    color: #ffffff;
+    background: #a8792b;
+}
+
+.leave-action-approve:hover {
+    background: #90651f;
+}
+
+.leave-action-reject {
+    color: #b42318;
+    background: #ffffff;
+    border-color: #e7c5c2;
+}
+
+.leave-action-reject:hover {
+    background: #fff5f4;
+}
+
+@media (max-width: 640px) {
+    .leave-approval-panel {
+        padding: 16px;
+    }
+
+    .leave-application-card {
+        padding: 16px;
+    }
+
+    .leave-application-details {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .leave-application-reason,
+    .leave-application-submitted {
+        grid-column: auto;
+    }
+}
+
+/* Leave Approval — layout correction */
+
+.leave-approval-page {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.leave-approval-panel {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.leave-approval-message {
+    margin: 0 0 20px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.leave-summary-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 22px;
+    margin: 0 0 28px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-summary-label {
+    margin: 0 0 6px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.leave-summary-count {
+    margin: 0;
+    color: #172033;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.leave-date-group {
+    margin: 0 0 30px;
+}
+
+.leave-date-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.leave-date-title {
+    margin: 0;
+    color: #172033;
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.leave-date-count {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-application-card {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 22px;
+    margin: 0 0 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-application-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 0 0 20px;
+}
+
+.leave-student-name {
+    margin: 0 0 5px;
+    color: #172033;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.leave-register-number {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.leave-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.leave-status-pending {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.leave-status-approved {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.leave-status-rejected {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.leave-application-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 28px;
+}
+
+.leave-detail-label {
+    display: block;
+    margin: 0 0 6px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-detail-value {
+    color: #263449;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.leave-application-reason,
+.leave-application-submitted {
+    grid-column: 1 / -1;
+}
+
+.leave-application-submitted {
+    padding-top: 14px;
+    border-top: 1px solid #edf0f4;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.leave-application-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.leave-action-button {
+    min-height: 40px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.leave-action-approve {
+    color: #ffffff;
+    background: #a8792b;
+}
+
+.leave-action-approve:hover {
+    background: #90651f;
+}
+
+.leave-action-reject {
+    color: #b42318;
+    background: #ffffff;
+    border-color: #e7c5c2;
+}
+
+.leave-action-reject:hover {
+    background: #fff5f4;
+}
+
+@media (max-width: 640px) {
+    .leave-approval-panel {
+        padding: 16px;
+    }
+
+    .leave-application-card {
+        padding: 16px;
+    }
+
+    .leave-application-details {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .leave-application-reason,
+    .leave-application-submitted {
+        grid-column: auto;
+    }
+}
+
+/* Leave Approval — layout correction */
+
+.leave-approval-page {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.leave-approval-panel {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.leave-approval-message {
+    margin: 0 0 20px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.leave-summary-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 22px;
+    margin: 0 0 28px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-summary-label {
+    margin: 0 0 6px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.leave-summary-count {
+    margin: 0;
+    color: #172033;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.leave-date-group {
+    margin: 0 0 30px;
+}
+
+.leave-date-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.leave-date-title {
+    margin: 0;
+    color: #172033;
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.leave-date-count {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-application-card {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 22px;
+    margin: 0 0 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.leave-application-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 0 0 20px;
+}
+
+.leave-student-name {
+    margin: 0 0 5px;
+    color: #172033;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.leave-register-number {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.leave-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.leave-status-pending {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.leave-status-approved {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.leave-status-rejected {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.leave-application-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 28px;
+}
+
+.leave-detail-label {
+    display: block;
+    margin: 0 0 6px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.leave-detail-value {
+    color: #263449;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.leave-application-reason,
+.leave-application-submitted {
+    grid-column: 1 / -1;
+}
+
+.leave-application-submitted {
+    padding-top: 14px;
+    border-top: 1px solid #edf0f4;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.leave-application-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.leave-action-button {
+    min-height: 40px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.leave-action-approve {
+    color: #ffffff;
+    background: #a8792b;
+}
+
+.leave-action-approve:hover {
+    background: #90651f;
+}
+
+.leave-action-reject {
+    color: #b42318;
+    background: #ffffff;
+    border-color: #e7c5c2;
+}
+
+.leave-action-reject:hover {
+    background: #fff5f4;
+}
+
+@media (max-width: 640px) {
+    .leave-approval-panel {
+        padding: 16px;
+    }
+
+    .leave-application-card {
+        padding: 16px;
+    }
+
+    .leave-application-details {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .leave-application-reason,
+    .leave-application-submitted {
+        grid-column: auto;
+    }
+}
+/* =====================================================
+   NOTICES
+   ===================================================== */
+
+.notices-page {
+    width: 100%;
+}
+
+/* HEADER */
+
+.notices-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.notices-heading h3 {
+    margin: 5px 0 6px;
+    font-size: 25px;
+    color: #172033;
+}
+
+.notices-heading p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.section-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #b5832d;
+}
+
+/* CREATE BUTTON */
+
+.notice-create-btn,
+.notice-publish-btn {
+    border: none;
+    border-radius: 7px;
+    background: #b5832d;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.notice-create-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 17px;
+    white-space: nowrap;
+}
+
+.notice-create-btn span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 12px;
+}
+
+.notice-create-btn:hover,
+.notice-publish-btn:hover {
+    background: #966c24;
+    transform: translateY(-1px);
+}
+
+/* FORM PANEL */
+
+.notice-form-panel {
+    background: #ffffff;
+    border: 1px solid #e2e6ec;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 18px rgba(20, 30, 50, 0.05);
+}
+
+.notice-form-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.notice-form-header h3 {
+    margin: 5px 0 6px;
+    color: #172033;
+    font-size: 20px;
+}
+
+.notice-form-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.notice-close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+/* FORM FIELDS */
+
+.notice-form {
+    width: 100%;
+}
+
+.notice-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.notice-field label {
+    margin-bottom: 8px;
+    color: #273247;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.notice-field label span {
+    margin-left: 5px;
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.notice-field input,
+.notice-field textarea {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #d8dee8;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #172033;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 12px 13px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.notice-field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.notice-field input:focus,
+.notice-field textarea:focus {
+    border-color: #b5832d;
+    box-shadow: 0 0 0 3px rgba(181, 131, 45, 0.1);
+}
+
+/* TWO-COLUMN ROW */
+
+.notice-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* ACTIONS */
+
+.notice-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 8px;
+}
+
+.notice-cancel-btn {
+    padding: 11px 18px;
+    border: 1px solid #d8dee8;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.notice-publish-btn {
+    padding: 11px 20px;
+}
+
+/* NOTICE LIST */
+
+.notices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.notice-loading,
+.empty-state {
+    padding: 38px 20px;
+    border: 1px dashed #d8dee8;
+    border-radius: 10px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .notices-toolbar {
+        flex-direction: column;
+    }
+
+    .notice-create-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .notice-form-panel {
+        padding: 20px;
+    }
+
+    .notice-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .notice-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .notice-form-actions button {
+        width: 100%;
+    }
+}
+/* =========================================
+   FACULTY STUDENT VOICE
+   ========================================= */
+
+.student-voice-staff-page {
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+
+/* LIST */
+
+.faculty-voice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* CARD */
+
+.voice-card {
+    background: #ffffff;
+    border: 1px solid #e1e5ec;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 8px rgba(20, 30, 50, 0.04);
+    transition: box-shadow 0.2s ease,
+                transform 0.2s ease;
+}
+
+.voice-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(20, 30, 50, 0.08);
+}
+
+
+/* TOP SECTION */
+
+.voice-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.voice-main-info {
+    min-width: 0;
+}
+
+.voice-title {
+    margin: 12px 0 0;
+    font-size: 18px;
+    font-weight: 650;
+    color: #172033;
+}
+
+
+/* BADGES */
+
+.voice-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.voice-type,
+.voice-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.voice-feedback {
+    background: #e8f1ff;
+    color: #275ea8;
+}
+
+.voice-complaint {
+    background: #fff0f0;
+    color: #a64040;
+}
+
+.status-pending {
+    background: #fff5df;
+    color: #9a6817;
+}
+
+.status-in-progress {
+    background: #eaf0ff;
+    color: #4266aa;
+}
+
+.status-resolved {
+    background: #e8f6ed;
+    color: #287a4b;
+}
+
+
+/* DATE */
+
+.voice-date {
+    white-space: nowrap;
+    font-size: 12px;
+    color: #7b8494;
+    padding-top: 4px;
+}
+
+
+/* META INFORMATION */
+
+.voice-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.voice-category {
+    font-weight: 600;
+    color: #495466;
+}
+
+.voice-dot {
+    color: #b0b7c3;
+}
+
+
+/* MESSAGE */
+
+.voice-message {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: #f7f8fa;
+    border-radius: 8px;
+    color: #3d4654;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* FOOTER */
+
+.voice-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #edf0f4;
+}
+
+
+/* STUDENT INFORMATION */
+
+.voice-student {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.voice-student-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #9098a6;
+}
+
+.voice-student strong {
+    color: #202939;
+}
+
+.voice-register {
+    font-size: 12px;
+    color: #7b8494;
+}
+
+
+/* STATUS CONTROL */
+
+.voice-status-control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.voice-status-control label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #7c8594;
+}
+
+.voice-status-select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #d9dee7;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #273142;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+
+.voice-status-select:focus {
+    border-color: #b6842c;
+    box-shadow: 0 0 0 3px rgba(182, 132, 44, 0.12);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .voice-card-top,
+    .voice-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .voice-status-control {
+        width: 100%;
+    }
+
+    .voice-date {
+        padding-top: 0;
+    }
+}

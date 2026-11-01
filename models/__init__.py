@@ -13,3 +13,6 @@ from .leaveapplication import LeaveApplication
 from .timetable import Timetable
 from .document import Document
 from .submission import Submission
+from .class_advisor import ClassAdvisor
+from .student_voice import StudentVoice
+from .leave_approval_visit import LeaveApprovalVisit

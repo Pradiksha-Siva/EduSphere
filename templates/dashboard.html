@@ -13,6 +13,12 @@
         href="{{ url_for('static', filename='css/style.css') }}"
     >
 
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/jspreadsheet-ce@5/dist/jspreadsheet.min.css">
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/jsuites@5/dist/jsuites.min.css">
+
 </head>
 
 
@@ -125,20 +131,19 @@
 
 
     <!-- SERVER VALUES -->
+<script>
+    window.USER_ROLE = "{{ user_role }}";
+    window.USER_DEPARTMENT = {{ department_name | tojson }};
+</script>
 
-    <script>
+<!-- JSUITES -->
+<script src="https://cdn.jsdelivr.net/npm/jsuites@5/dist/jsuites.min.js"></script>
 
-        window.USER_ROLE = "{{ user_role }}";
+<!-- JSPREADSHEET -->
+<script src="https://cdn.jsdelivr.net/npm/jspreadsheet-ce@5/dist/index.min.js"></script>
 
-        window.USER_DEPARTMENT = {{ department_name | tojson }};
-    </script>
-
-
-    <!-- DASHBOARD JS -->
-
-    <script
-        src="{{ url_for('static', filename='js/dashboard.js') }}"
-    ></script>
+<!-- DASHBOARD JS: LOAD ONLY ONCE -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 
 </body>

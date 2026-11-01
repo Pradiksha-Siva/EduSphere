@@ -1,3 +1,4 @@
+
 from extensions import db
 
 
@@ -26,6 +27,7 @@ class Marks(db.Model):
     marks_obtained = db.Column(
         db.Numeric(5, 2)
     )
+
     is_published = db.Column(
         db.Boolean,
         nullable=False,
@@ -39,6 +41,14 @@ class Marks(db.Model):
     staff_id = db.Column(
         db.Integer,
         db.ForeignKey("staff.staff_id")
+    )
+
+    academic_year = db.Column(
+        db.Integer
+    )
+
+    semester = db.Column(
+        db.Integer
     )
 
     created_at = db.Column(

@@ -52,7 +52,10 @@ class Student(db.Model):
     semester = db.Column(
         db.Integer
     )
-
+    batch = db.Column(
+        db.String(20),
+        nullable=True
+    )
     section = db.Column(
         db.String(10)
     )

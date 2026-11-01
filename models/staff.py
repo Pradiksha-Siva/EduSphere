@@ -89,3 +89,7 @@ class Staff(db.Model):
     "LeaveApplication",
     back_populates="staff"
     )
+    notices = db.relationship(
+    "Notice",
+    back_populates="staff"
+)
